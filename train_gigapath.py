@@ -89,7 +89,7 @@ def main(args):
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
-    extraction = args.data_path.split('/')[-1].split('_')[0]
+    extraction = args.data_path[0].split('/')[-1].split('_')[0]
     with open('outcome/gigapath.log', 'a+') as file:
         file.write('extraction = {}, seed = {}, fold = {}, lr = {:.2g}, weight_decay = {:.2g}, epochs = {}\n'.\
                    format(extraction, args.seed, args.fold, args.lr, args.weight_decay, args.epochs))
@@ -130,15 +130,15 @@ if __name__=='__main__':
     parser.add_argument('--latent_dim', default=768, type=int)
     parser.add_argument('--feat_layer', default='5-11', type=str)
     parser.add_argument('--lr', default=1e-4, type=float)
-    parser.add_argument('--weight_decay', default=2e-4, type=float)
+    parser.add_argument('--weight_decay', default=5e-4, type=float)
     parser.add_argument('--batch_size', default=1, type=int)
     parser.add_argument('--num_workers', default=8, type=int)
     
     parser.add_argument('--seed', default=123, type=int)
     parser.add_argument('--fold', default=1, type=int)
-    parser.add_argument('--data_path', nargs='+', type=str, default=['WSI/features/gigapath_features', 'WSI/features2/gigapath_features', 'WSI/features3/gigapath_features'])
+    parser.add_argument('--data_path', nargs='+', type=str, default=['WSI/features/gigapath_features', 'WSI/features2/gigapath_features', 'WSI/features3/gigapath_features', 'WSI/features4/gigapath_features'])
     parser.add_argument('--label_path', default='labels/NDPI_labels.xlsx', type=str)
-    parser.add_argument('--device', default='cuda:4', type=str)
+    parser.add_argument('--device', default='cuda:1', type=str)
     parser.add_argument('--pretrained', default='checkpoints/slide_encoder.pth', type=str)
 
     args = parser.parse_args()
