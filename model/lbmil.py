@@ -110,7 +110,7 @@ class TransBlock(nn.Module):
 
 
 class LearnableBiasMIL(nn.Module):
-    def __init__(self, input_size, n_classes=2, feat_size=256, n_heads=4, n_blocks=2, table_size=8):
+    def __init__(self, input_size, n_classes=2, feat_size=256, n_heads=4, n_blocks=1, table_size=[4,6,8,10]):
         super(LearnableBiasMIL, self).__init__()
         self.input_size = input_size
         self.feat_size = feat_size
@@ -126,7 +126,8 @@ class LearnableBiasMIL(nn.Module):
         self._fc2 = nn.Linear(feat_size, self.n_classes)
         self.rotary = Rotary2D(dim=feat_size)
 
-        self.bias_table = nn.Parameter(torch.zeros(n_blocks, n_heads, table_size, table_size, dtype=torch.float))
+        assert n_heads == len(table_size)
+        self.bias_table = nn.Parameter(torch.zeros(n_blocks, n_heads, max(table_size), max(table_size), dtype=torch.float))
 
 
     def forward(self, x):
@@ -139,7 +140,7 @@ class LearnableBiasMIL(nn.Module):
 
         h = self._fc1(h)
 
-        freqs_cis, bias = self.positional_embedding(x, use_bias=False)
+        freqs_cis, bias = self.positional_embedding(x, use_bias=True)
 
         for i in range(self.n_blocks):
             h, attn = self.layers[i](h, freqs_cis, bias[i].unsqueeze(0) if exists(bias) else None)
@@ -169,8 +170,10 @@ class LearnableBiasMIL(nn.Module):
             if use_bias:
                 x_dis, y_dis = torch.abs(x_pos.unsqueeze(1) - x_pos.unsqueeze(0)).int(), torch.abs(y_pos.unsqueeze(1) - y_pos.unsqueeze(0)).int()
                 bias = torch.full((self.n_blocks, self.n_heads, x_dis.shape[0], x_dis.shape[1]), -100, dtype=torch.float).to(x.device)
-                valid_mask = (x_dis < self.table_size) & (y_dis < self.table_size)
-                bias[:, :, valid_mask] = self.bias_table[:, :, x_dis[valid_mask], y_dis[valid_mask]]
+                
+                for i in range(self.n_heads):
+                    valid_mask = (x_dis < self.table_size[i]) & (y_dis < self.table_size[i])
+                    bias[:, i, valid_mask] = self.bias_table[:, i, x_dis[valid_mask], y_dis[valid_mask]]
 
                 N = bias.shape[3]
                 pad_num = (8 - N % 8) % 8
