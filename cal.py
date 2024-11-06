@@ -3,12 +3,12 @@ import numpy as np
 acc, recall, f1, auc = [], [], [], []
 
 model = 'lbmil'
-start = 15
+start = 45
 
 with open('outcome/{}.log'.format(model), 'r') as f:
     lines = f.readlines()
     for line in lines:
-        if line[:4] == 'test':
+        if line[:5] == 'test:':
             acc.append(float(line[28:34]))
             recall.append(float(line[67:73]))
             f1.append(float(line[81:87]))
