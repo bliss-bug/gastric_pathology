@@ -1,9 +1,16 @@
+import argparse
 import numpy as np
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--model', type=str, default='lbmil')
+parser.add_argument('--start', type=int, default=45)
+
+args = parser.parse_args()
 
 acc, recall, f1, auc = [], [], [], []
 
-model = 'lbmil'
-start = 45
+model = args.model
+start = args.start
 
 with open('outcome/{}.log'.format(model), 'r') as f:
     lines = f.readlines()
