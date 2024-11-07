@@ -289,7 +289,7 @@ class LongMIL(nn.Module):
             #x_pos = torch.round((x_pos - x_pos.min()) / (shape * scale) / 4)
             #y_pos = torch.round((y_pos - y_pos.min()) / (shape * scale) / 4)
             x_pos, y_pos = torch.round(x_pos - x_pos.min()), torch.round(y_pos - y_pos.min())
-            H, W = 1000 // scale, 1000 // scale
+            H, W = 600 // scale, 600 // scale
             selected_idx = (x_pos * W + y_pos).to(torch.int)
 
             if use_rope:

@@ -110,7 +110,7 @@ class TransBlock(nn.Module):
 
 
 class LearnableBiasMIL(nn.Module):
-    def __init__(self, input_size, n_classes=2, feat_size=256, n_heads=4, n_blocks=1, table_size=[4,6,8,10]):
+    def __init__(self, input_size, n_classes=2, feat_size=256, n_heads=4, n_blocks=2, table_size=[4,6,8,10]):
         super(LearnableBiasMIL, self).__init__()
         self.input_size = input_size
         self.feat_size = feat_size
@@ -121,6 +121,7 @@ class LearnableBiasMIL(nn.Module):
         self._fc1 = nn.Sequential(nn.Linear(input_size, feat_size), nn.ReLU())
 
         self.layers = nn.ModuleList([TransBlock(dim=feat_size, num_heads=self.n_heads) for _ in range(n_blocks)])
+        #self.global_layer = TransBlock(dim=feat_size, num_heads=self.n_heads)
 
         self.norm = nn.LayerNorm(feat_size)
         self._fc2 = nn.Linear(feat_size, self.n_classes)
@@ -135,7 +136,8 @@ class LearnableBiasMIL(nn.Module):
         :param x:  shape = N * (feat_size+2), 2 for x-y 2d-position
         :return:
         '''
-
+        if self.n_blocks > 1 and x.shape[0] > 20000:
+            x = x[:20000, :]
         h = x[:, :self.input_size].unsqueeze(0) # shape 1*N*feat_size
 
         h = self._fc1(h)
@@ -144,6 +146,8 @@ class LearnableBiasMIL(nn.Module):
 
         for i in range(self.n_blocks):
             h, attn = self.layers[i](h, freqs_cis, bias[i].unsqueeze(0) if exists(bias) else None)
+        
+        #h, attn = self.global_layer(h, freqs_cis, None)  # global attention
 
         h = self.norm(h.mean(1))
 
@@ -170,7 +174,9 @@ class LearnableBiasMIL(nn.Module):
             if use_bias:
                 x_dis, y_dis = torch.abs(x_pos.unsqueeze(1) - x_pos.unsqueeze(0)).int(), torch.abs(y_pos.unsqueeze(1) - y_pos.unsqueeze(0)).int()
                 bias = torch.full((self.n_blocks, self.n_heads, x_dis.shape[0], x_dis.shape[1]), -100, dtype=torch.float).to(x.device)
-                
+                if self.n_blocks > 1:
+                    bias[-1] = 0
+
                 for i in range(self.n_heads):
                     valid_mask = (x_dis < self.table_size[i]) & (y_dis < self.table_size[i])
                     bias[:, i, valid_mask] = self.bias_table[:, i, x_dis[valid_mask], y_dis[valid_mask]]
