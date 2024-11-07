@@ -222,7 +222,7 @@ if __name__=='__main__':
     parser.add_argument('--epochs', default=8, type=int)
     parser.add_argument('--feat_size', default=1024, type=int)
     parser.add_argument('--lr', default=1e-4, type=float)
-    parser.add_argument('--weight_decay', default=5e-4, type=float)
+    parser.add_argument('--weight_decay', default=1e-3, type=float)
     parser.add_argument('--batch_size', default=1, type=int)
     parser.add_argument('--num_workers', default=4, type=int)
     
