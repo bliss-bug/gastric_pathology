@@ -89,8 +89,7 @@ class DropPath(nn.Module):
 
 
 class TransBlock(nn.Module):
-
-    def __init__(self, norm_layer=nn.LayerNorm, dim=256,num_heads=4,attn_drop=0.05,mlp_ratio=4.,drop_path=0.):
+    def __init__(self, norm_layer=nn.LayerNorm, dim=256, num_heads=4, attn_drop=0.05, mlp_ratio=4., drop_path=0.):
         super().__init__()
         self.norm = norm_layer(dim)
         self.attn = Attention(dim=dim, num_heads=num_heads,attn_drop=attn_drop)
@@ -110,7 +109,7 @@ class TransBlock(nn.Module):
 
 
 class LearnableBiasMIL(nn.Module):
-    def __init__(self, input_size, n_classes=2, feat_size=256, n_heads=4, n_blocks=2, table_size=[4,6,8,10]):
+    def __init__(self, input_size, n_classes=2, feat_size=256, n_heads=4, n_blocks=1, table_size=[4,6,8,10]):
         super(LearnableBiasMIL, self).__init__()
         self.input_size = input_size
         self.feat_size = feat_size
@@ -129,6 +128,7 @@ class LearnableBiasMIL(nn.Module):
 
         assert n_heads == len(table_size)
         self.bias_table = nn.Parameter(torch.zeros(n_blocks, n_heads, max(table_size), max(table_size), dtype=torch.float))
+        #nn.init.trunc_normal_(self.bias_table, std=0.02)
 
 
     def forward(self, x):
@@ -174,8 +174,6 @@ class LearnableBiasMIL(nn.Module):
             if use_bias:
                 x_dis, y_dis = torch.abs(x_pos.unsqueeze(1) - x_pos.unsqueeze(0)).int(), torch.abs(y_pos.unsqueeze(1) - y_pos.unsqueeze(0)).int()
                 bias = torch.full((self.n_blocks, self.n_heads, x_dis.shape[0], x_dis.shape[1]), -100, dtype=torch.float).to(x.device)
-                if self.n_blocks > 1:
-                    bias[-1] = 0
 
                 for i in range(self.n_heads):
                     valid_mask = (x_dis < self.table_size[i]) & (y_dis < self.table_size[i])

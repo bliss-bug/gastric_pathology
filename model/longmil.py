@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import copy
-import pdb
 import numpy as np
 from .rotary import apply_rotary_position_embeddings, Rotary2D
 from torch import autograd
@@ -9,11 +8,11 @@ try:
     from xformers.ops import memory_efficient_attention
 except:
     print('please install xformer')
+'''
 try:
     from fla.layers import GatedLinearAttention
 except:
     print('please install fla from https://github.com/sustcsonglin/flash-linear-attention')
-'''
 try:
     from mamba_ssm import Mamba
 except:
