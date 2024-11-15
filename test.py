@@ -8,12 +8,7 @@ from torch.utils.data import DataLoader
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, roc_curve
 
 from data import PathologyDataset
-import model.abmil as abmil
-import model.dsmil as dsmil
-import model.transmil as transmil
-import model.rrt as rrt
-import model.longmil as longmil
-import model.lbmil as lbmil
+from model import abmil, clam, dsmil, transmil, rrt, longmil, lbmil
 from utils import load_test_data
 
 
@@ -30,6 +25,11 @@ def test(dataloader, milnet, criterion, device, model='abmil'):
                 loss = criterion(bag_prediction, labels)
                 y_pred.extend([torch.squeeze(bag_prediction).argmax().cpu().numpy()])
                 y_score.extend([torch.squeeze(bag_prediction).softmax(dim=0)[1].cpu().numpy()])
+            elif model in ['clam_sb', 'clam_mb']:
+                bag_prediction, Y_prob, Y_hat, _, _ = milnet(feats)
+                loss = criterion(bag_prediction, labels)
+                y_pred.extend([torch.squeeze(Y_hat).cpu().numpy()])
+                y_score.extend([torch.squeeze(Y_prob)[1].cpu().numpy()])
             elif model == 'dsmil':
                 ins_prediction, bag_prediction, attention, atten_B = milnet(feats)
                 max_prediction, _ = torch.max(ins_prediction, 0)
@@ -51,16 +51,16 @@ def test(dataloader, milnet, criterion, device, model='abmil'):
                 y_score.extend([torch.squeeze(bag_prediction).softmax(dim=0)[1].cpu().numpy()])
             elif model == 'longmil':
                 x = torch.cat([feats, poses], dim=1)
-                bag_prediction, _, _, attention = milnet(x)
+                bag_prediction, Y_hat, Y_prob, attention = milnet(x)
                 loss = criterion(bag_prediction, labels)
-                y_pred.extend([torch.squeeze(bag_prediction).argmax().cpu().numpy()])
-                y_score.extend([torch.squeeze(bag_prediction).softmax(dim=0)[1].cpu().numpy()])
+                y_pred.extend([torch.squeeze(Y_hat).cpu().numpy()])
+                y_score.extend([torch.squeeze(Y_prob)[1].cpu().numpy()])
             elif model == 'lbmil':
                 x = torch.cat([feats, poses], dim=1)
-                bag_prediction, _, _, attention = milnet(x)
+                bag_prediction, Y_hat, Y_prob, attention = milnet(x)
                 loss = criterion(bag_prediction, labels)
-                y_pred.extend([torch.squeeze(bag_prediction).argmax().cpu().numpy()])
-                y_score.extend([torch.squeeze(bag_prediction).softmax(dim=0)[1].cpu().numpy()])
+                y_pred.extend([torch.squeeze(Y_hat).cpu().numpy()])
+                y_score.extend([torch.squeeze(Y_prob)[1].cpu().numpy()])
 
             losses += loss.item()
             num += 1
@@ -91,6 +91,10 @@ def main(args):
 
     if args.model == 'abmil':
         milnet = abmil.Attention(in_size=args.feat_size, out_size=args.num_classes).to(device)
+    elif args.model == 'clam_sb':
+        milnet = clam.CLAM_SB(dropout=0.25, n_classes=args.num_classes, embed_dim=args.feat_size).to(device)
+    elif args.model == 'clam_mb':
+        milnet = clam.CLAM_MB(dropout=0.25, n_classes=args.num_classes, embed_dim=args.feat_size).to(device)
     elif args.model == 'dsmil':
         i_classifier = dsmil.FCLayer(in_size=args.feat_size, out_size=args.num_classes).to(device)
         b_classifier = dsmil.BClassifier(input_size=args.feat_size, output_class=args.num_classes).to(device)
