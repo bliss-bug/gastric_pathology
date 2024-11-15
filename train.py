@@ -39,8 +39,8 @@ def train(dataloader, milnet, criterion, optimizer, device, model='abmil'):
             loss = 0.5*bag_loss + 0.5*max_loss
         elif model == 'transmil':
             output = milnet(feats)
-            bag_prediction, bag_feature = output['logits'], output["Bag_feature"]
-            loss = criterion(bag_prediction.view(1, -1), labels)
+            bag_prediction, bag_feature = output['logits'], output['Bag_feature']
+            loss = criterion(bag_prediction, labels)
         elif model == 'rrtmil':
             bag_prediction = milnet(feats)
             loss = criterion(bag_prediction, labels)
@@ -90,10 +90,10 @@ def val(dataloader, milnet, criterion, device, model='abmil'):
                 y_score.extend([torch.squeeze(0.5*bag_prediction+0.5*max_prediction).softmax(dim=0)[1].cpu().numpy()])
             elif model == 'transmil':
                 output = milnet(feats)
-                bag_prediction, bag_feature = output['logits'], output["Bag_feature"]
-                loss = criterion(bag_prediction.view(1, -1), labels)
-                y_pred.extend([torch.squeeze(bag_prediction).argmax().cpu().numpy()])
-                y_score.extend([torch.squeeze(bag_prediction).softmax(dim=0)[1].cpu().numpy()])
+                bag_prediction, Y_prob, Y_hat = output['logits'], output['Y_prob'], output['Y_hat']
+                loss = criterion(bag_prediction, labels)
+                y_pred.extend([torch.squeeze(Y_hat).cpu().numpy()])
+                y_score.extend([torch.squeeze(Y_prob)[1].cpu().numpy()])
             elif model == 'rrtmil':
                 bag_prediction = milnet(feats)
                 loss = criterion(bag_prediction, labels)
