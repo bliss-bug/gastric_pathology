@@ -48,12 +48,10 @@ def train(dataloader, milnet, criterion, optimizer, device, model='abmil'):
             x = torch.cat([feats, poses], dim=1)
             bag_prediction, _, _, _ = milnet(x)
             loss = criterion(bag_prediction, labels)
-            #torch.cuda.empty_cache()
         elif model == 'lbmil':
             x = torch.cat([feats, poses], dim=1)
             bag_prediction, _, _, _ = milnet(x)
             loss = criterion(bag_prediction, labels)
-            #torch.cuda.empty_cache()
 
         loss.backward()
         optimizer.step()
