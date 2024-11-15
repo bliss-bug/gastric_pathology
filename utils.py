@@ -73,18 +73,7 @@ def load_test_data(data_path, label_path):
 
     feats_path = os.listdir(data_path)
     feats_path = [os.path.join(data_path, feat_path) for feat_path in feats_path]
-    '''
-    random.seed(5)
-    if 'uni' in data_path:
-        feats_path2 = os.listdir('WSI/features/uni_features')
-        feats_path2 = [os.path.join('WSI/features/uni_features', feat_path2) for feat_path2 in feats_path2]
-    else:
-        feats_path2 = os.listdir('WSI/features/gigapath_features')
-        feats_path2 = [os.path.join('WSI/features/gigapath_features', feat_path2) for feat_path2 in feats_path2]
     
-    random.shuffle(feats_path2)
-    feats_path = feats_path[-15:] + feats_path2[-20:]
-    '''
     return feats_path, labels
 
 
@@ -97,5 +86,5 @@ def get_cam_1d(classifier, features):
 
 if __name__ == '__main__':
     random.seed(2048)
-    load_data(['WSI/features2/uni_features', 'WSI/features3/uni_features', 'WSI/features4/uni_features'], 'NDPI_labels.xlsx', 5)
-    #load_test_data('WSI/features/gigapath_features', 'GPI_labels.xlsx')
+    load_data(['WSI/features/gigapath_features'], 'labels/NDPI_labels.xlsx', 5)
+    #load_test_data('WSI/features/gigapath_features', 'labels/NDPI_labels.xlsx')
