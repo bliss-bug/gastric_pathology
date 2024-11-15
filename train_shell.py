@@ -11,16 +11,14 @@ for model in models:
     for extraction in extractions:
         for i in range(1, 6):
             cmd = f'python train.py --feat_size={size[extraction]} --data_path \'WSI/features/{extraction}_features\' \
-                \'WSI/features2/{extraction}_features\' \'WSI/features3/{extraction}_features\' \
-                \'WSI/features4/{extraction}_features\' --model=\'{model}\' --fold={i} --device={device}'
+                \'WSI/features2/{extraction}_features\' --model=\'{model}\' --fold={i} --device={device}'
             os.system(cmd)
 
 '''
 for extraction in extractions:
     for i in range(1, 6):
         cmd = f'python train_DTFD.py --feat_size={size[extraction]} --data_path \'WSI/features/{extraction}_features\' \
-            \'WSI/features2/{extraction}_features\' \'WSI/features3/{extraction}_features\' \
-            \'WSI/features4/{extraction}_features\' --fold={i} --device={device}'
+            \'WSI/features2/{extraction}_features\' --fold={i} --device={device}'
         os.system(cmd)
 '''
 
