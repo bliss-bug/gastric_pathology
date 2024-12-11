@@ -41,7 +41,7 @@ class Attention(nn.Module):
             x = memory_efficient_attention(q, k, v, p=self.attn_drop).reshape(B, N, C)
         x = self.proj(x)
         x = self.proj_drop(x)
-        return x, None
+        return x, (q.permute(0,2,1,3) @ k.permute(0,2,3,1) / q.shape[-1]**0.5 + bias).softmax(dim=-1)
 
 
 
