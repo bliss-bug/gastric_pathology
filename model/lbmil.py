@@ -138,7 +138,7 @@ class LearnableBiasMIL(nn.Module):
         '''
         if self.n_blocks > 1 and x.shape[0] > 20000:
             x = x[:20000, :]
-        h = x[:, :self.input_size].unsqueeze(0) # shape 1*N*feat_size
+        h = x[:, :self.input_size].unsqueeze(0) # shape 1*N*input_size
 
         h = self._fc1(h)
 
