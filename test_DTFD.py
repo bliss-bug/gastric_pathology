@@ -51,7 +51,7 @@ def test(dataloader, classifier, dimReduction, attention, UClassifier,
 
                 patch_pred_logits = get_cam_1d(classifier, tattFeats.unsqueeze(0)).squeeze(0)  ###  cls x n
                 patch_pred_logits = torch.transpose(patch_pred_logits, 0, 1)  ## n x cls
-                patch_pred_softmax = torch.sigmoid(patch_pred_logits)  ## n x cls
+                patch_pred_softmax = torch.softmax(patch_pred_logits)  ## n x cls
 
                 _, sort_idx = torch.sort(patch_pred_softmax[:,-1], descending=True)
 
