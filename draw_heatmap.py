@@ -20,7 +20,9 @@ def generate_weight(milnet, feat_path):
         _, _, Y_prob, attn = milnet(torch.tensor(np.concatenate([feat, pos], axis=1), dtype=torch.float).cuda(0))
         print(Y_prob)
         weight = torch.sum(attn.squeeze(), (0, 1)).cpu().numpy()
-    
+
+    sorted_idx = np.argsort(-weight)
+    print(pos[sorted_idx[:20]])
     return pos, weight
 
 
@@ -81,9 +83,9 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--ndpi_file', default="WSI/GPI2/201511164.ndpi", type=str)
-    parser.add_argument('--feat_path', default="WSI/features2/uni_features/201511164.pkl",type=str)
-    parser.add_argument('--output_jpg', default="cam_outcome/201511164.jpg", type=str)
+    parser.add_argument('--ndpi_file', default="WSI/GPI/S202228530.ndpi", type=str)
+    parser.add_argument('--feat_path', default="WSI/features/uni_features/S202228530.pkl",type=str)
+    parser.add_argument('--output_jpg', default="heatmap_outcome/S202228530.jpg", type=str)
     parser.add_argument('--checkpoint', default="checkpoints/uni_lbmil.pth", type=str)
     parser.add_argument('--scale_factor', default=128, type=int)
     parser.add_argument('--feat_size', default=1024, type=int)
