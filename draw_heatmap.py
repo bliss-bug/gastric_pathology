@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 
 import torch
 import torch.nn.functional as F
-from model import lbmil
+from model.lbmil import LearnableBiasMIL
 
 
-def compute_attention(milnet, feat_path):
+def compute_attention(milnet: LearnableBiasMIL, feat_path):
     with open(feat_path, 'rb') as f:
         data = pickle.load(f)
     feat = np.array([d['feature'] for d in data])
@@ -26,13 +26,13 @@ def compute_attention(milnet, feat_path):
     weight = (weight - weight.min()) / (weight.max() - weight.min())
 
     sorted_idx = np.argsort(-weight)
-    #print(pos[sorted_idx[:20]])
+    print(pos[sorted_idx[:20]])
 
     return pos, weight
 
 
 
-def compute_gradcam(model, feat_path, target_class=1):
+def compute_gradcam(model: LearnableBiasMIL, feat_path, target_class=1):
     with open(feat_path, 'rb') as f:
         data = pickle.load(f)
     feat = np.array([d['feature'] for d in data])
@@ -40,7 +40,6 @@ def compute_gradcam(model, feat_path, target_class=1):
     x = torch.tensor(np.concatenate([feat, pos], axis=1), dtype=torch.float).cuda(0)
 
     model.eval()
-    x = x.clone().detach().requires_grad_(True)
     logits, _, Y_prob, attn = model(x)
     print(Y_prob)
 
@@ -67,7 +66,7 @@ def compute_gradcam(model, feat_path, target_class=1):
 
     cam = cam.detach().cpu().numpy()
     sorted_idx = np.argsort(-cam)
-    #print(pos[sorted_idx[:20]])
+    print(pos[sorted_idx[:20]])
 
     return pos, cam
 
@@ -114,7 +113,7 @@ def main(args):
     scale_factor = args.scale_factor
     output_jpg = f"{args.heatmap_type}/{args.ndpi_file.split('/')[-1].split('.')[0]}.jpg"
 
-    milnet = lbmil.LearnableBiasMIL(input_size=args.feat_size, n_classes=2).cuda(0)
+    milnet = LearnableBiasMIL(input_size=args.feat_size, n_classes=2).cuda(0)
     milnet.load_state_dict(torch.load(args.checkpoint))
 
     if args.heatmap_type == "attentionmap":
@@ -129,8 +128,8 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--ndpi_file', default="WSI/GPI2/201715296.ndpi", type=str)
-    parser.add_argument('--feat_path', default="WSI/features2/uni_features/201715296.pkl",type=str)
+    parser.add_argument('--ndpi_file', default="WSI/GPI/S202228530.ndpi", type=str)
+    parser.add_argument('--feat_path', default="WSI/features/uni_features/S202228530.pkl",type=str)
     parser.add_argument('--heatmap_type', default="attentionmap", type=str)
     parser.add_argument('--checkpoint', default="checkpoints/uni_lbmil.pth", type=str)
     parser.add_argument('--scale_factor', default=128, type=int)
