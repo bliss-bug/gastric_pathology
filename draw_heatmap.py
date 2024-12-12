@@ -1,15 +1,16 @@
 import argparse
 import pickle
 import openslide
+import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 
 import torch
-import numpy as np
+import torch.nn.functional as F
 from model import lbmil
 
 
-def generate_weight(milnet, feat_path):
+def compute_attention(milnet, feat_path):
     with open(feat_path, 'rb') as f:
         data = pickle.load(f)
     feat = np.array([d['feature'] for d in data])
@@ -21,9 +22,54 @@ def generate_weight(milnet, feat_path):
         print(Y_prob)
         weight = torch.sum(attn.squeeze(), (0, 1)).cpu().numpy()
 
+    # Normalize weights
+    weight = (weight - weight.min()) / (weight.max() - weight.min())
+
     sorted_idx = np.argsort(-weight)
-    print(pos[sorted_idx[:20]])
+    #print(pos[sorted_idx[:20]])
+
     return pos, weight
+
+
+
+def compute_gradcam(model, feat_path, target_class=1):
+    with open(feat_path, 'rb') as f:
+        data = pickle.load(f)
+    feat = np.array([d['feature'] for d in data])
+    pos = np.array([[int(d['file_name'].split('_')[0]), int(d['file_name'].split('_')[1])] for d in data])
+    x = torch.tensor(np.concatenate([feat, pos], axis=1), dtype=torch.float).cuda(0)
+
+    model.eval()
+    x = x.clone().detach().requires_grad_(True)
+    logits, _, Y_prob, attn = model(x)
+    print(Y_prob)
+
+    # Get target class score
+    score = logits[:, target_class]  # Shape: [1]
+
+    # Backpropagate to get gradients w.r.t. h
+    model.zero_grad()
+    score.backward(retain_graph=True)
+
+    # Access gradients and activations
+    gradients = model.saved_h.grad.squeeze(0)  # Shape: [N, feat_size]
+    activations = model.saved_h.squeeze(0)    # Shape: [N, feat_size]
+
+    # Compute channel-wise weights (global average pooling)
+    weights = gradients.mean(dim=0)  # Shape: [feat_size]
+
+    # Weighted sum of activations
+    cam = torch.matmul(activations, weights)  # Shape: [N]
+
+    # ReLU and normalize
+    cam = F.relu(cam)
+    cam = (cam - cam.min()) / (cam.max() - cam.min())  # Normalize to [0, 1]
+
+    cam = cam.detach().cpu().numpy()
+    sorted_idx = np.argsort(-cam)
+    #print(pos[sorted_idx[:20]])
+
+    return pos, cam
 
 
 
@@ -46,14 +92,11 @@ def generate_heatmap(ndpi_file, output_file, scale_factor, pos, weight):
     height, width, _ = img.shape
     weights = np.zeros((height, width))
     for (x, y), w in zip(pos, weight):
-        weights[y*2:y*2+2, x*2:x*2+2] = w - weight.min()
-
-    # 归一化权重到 [0, 1]
-    weights_normalized = (weights - np.min(weights)) / (np.max(weights) - np.min(weights))
+        weights[y*2:y*2+2, x*2:x*2+2] = w
     
     # 创建热力图
     cmap = plt.get_cmap('jet')  # 使用 Jet 色图
-    heatmap = cmap(weights_normalized)
+    heatmap = cmap(weights)
     heatmap = (heatmap[:, :, :3] * 255).astype(np.uint8)  # 转为 RGB 格式
 
     # 将热力图叠加到原始图像
@@ -68,13 +111,16 @@ def generate_heatmap(ndpi_file, output_file, scale_factor, pos, weight):
 
 def main(args):
     ndpi_file = args.ndpi_file
-    output_jpg = args.output_jpg
     scale_factor = args.scale_factor
+    output_jpg = f"{args.heatmap_type}/{args.ndpi_file.split('/')[-1].split('.')[0]}.jpg"
 
     milnet = lbmil.LearnableBiasMIL(input_size=args.feat_size, n_classes=2).cuda(0)
     milnet.load_state_dict(torch.load(args.checkpoint))
 
-    pos, weight = generate_weight(milnet, args.feat_path)
+    if args.heatmap_type == "attentionmap":
+        pos, weight = compute_attention(milnet, args.feat_path)
+    elif args.heatmap_type == "gradcam":
+        pos, weight = compute_gradcam(milnet, args.feat_path)
 
     generate_heatmap(ndpi_file, output_jpg, scale_factor, pos, weight)
 
@@ -83,9 +129,9 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--ndpi_file', default="WSI/GPI/S202228530.ndpi", type=str)
-    parser.add_argument('--feat_path', default="WSI/features/uni_features/S202228530.pkl",type=str)
-    parser.add_argument('--output_jpg', default="heatmap_outcome/S202228530.jpg", type=str)
+    parser.add_argument('--ndpi_file', default="WSI/GPI2/201715296.ndpi", type=str)
+    parser.add_argument('--feat_path', default="WSI/features2/uni_features/201715296.pkl",type=str)
+    parser.add_argument('--heatmap_type', default="attentionmap", type=str)
     parser.add_argument('--checkpoint', default="checkpoints/uni_lbmil.pth", type=str)
     parser.add_argument('--scale_factor', default=128, type=int)
     parser.add_argument('--feat_size', default=1024, type=int)
