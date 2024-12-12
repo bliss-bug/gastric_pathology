@@ -35,10 +35,11 @@ class Attention(nn.Module):
         if exists(freqs_cis):
             q, k = apply_rotary_position_embeddings(freqs_cis, q, k)
         q, k = q.view(1, N, self.num_heads, -1), k.view(1, N, self.num_heads, -1)
+        attn_drop = self.attn_drop if self.training else 0
         if exists(bias):
-            x = memory_efficient_attention(q, k, v, bias, p=self.attn_drop).reshape(B, N, C)
+            x = memory_efficient_attention(q, k, v, bias, p=attn_drop).reshape(B, N, C)
         else:
-            x = memory_efficient_attention(q, k, v, p=self.attn_drop).reshape(B, N, C)
+            x = memory_efficient_attention(q, k, v, p=attn_drop).reshape(B, N, C)
         x = self.proj(x)
         x = self.proj_drop(x)
         return x, (q.permute(0,2,1,3) @ k.permute(0,2,3,1) / q.shape[-1]**0.5 + bias).softmax(dim=-1)
@@ -148,6 +149,8 @@ class LearnableBiasMIL(nn.Module):
             h, attn = self.layers[i](h, freqs_cis, bias[i].unsqueeze(0) if exists(bias) else None)
         
         #h, attn = self.global_layer(h, freqs_cis, None)  # global attention
+        self.saved_h = h
+        self.saved_h.retain_grad()
 
         h = self.norm(h.mean(1))
 
