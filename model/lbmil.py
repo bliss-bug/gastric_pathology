@@ -42,7 +42,8 @@ class Attention(nn.Module):
             x = memory_efficient_attention(q, k, v, p=attn_drop).reshape(B, N, C)
         x = self.proj(x)
         x = self.proj_drop(x)
-        return x, (q.permute(0,2,1,3) @ k.permute(0,2,3,1) / q.shape[-1]**0.5 + bias).softmax(dim=-1)
+        attention = (q.permute(0,2,1,3) @ k.permute(0,2,3,1) / q.shape[-1]**0.5 + bias).softmax(dim=-1) if not self.training else None
+        return x, attention
 
 
 
@@ -150,7 +151,8 @@ class LearnableBiasMIL(nn.Module):
         
         #h, attn = self.global_layer(h, freqs_cis, None)  # global attention
         self.saved_h = h
-        self.saved_h.retain_grad()
+        if self.saved_h.requires_grad:
+            self.saved_h.retain_grad()
 
         h = self.norm(h.mean(1))
 
