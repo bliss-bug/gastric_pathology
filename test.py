@@ -19,7 +19,7 @@ def test(dataloader, milnet, criterion, device, model='abmil'):
 
     with torch.no_grad():
         for feats, poses, labels in tqdm(dataloader):
-            feats, labels = feats.squeeze().to(device), labels.long().to(device)
+            feats, poses, labels = feats.squeeze().to(device), poses.squeeze().to(device), labels.long().to(device)
             if model == 'abmil':
                 bag_prediction, _, _ = milnet(feats)
                 loss = criterion(bag_prediction, labels)
