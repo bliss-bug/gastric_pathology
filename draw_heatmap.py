@@ -91,7 +91,7 @@ def generate_heatmap(ndpi_file, output_file, scale_factor, pos, weight):
     height, width, _ = img.shape
     weights = np.zeros((height, width))
     for (x, y), w in zip(pos, weight):
-        weights[y*2:y*2+2, x*2:x*2+2] = w
+        weights[y*8:y*8+8, x*8:x*8+8] = w
     
     # 创建热力图
     cmap = plt.get_cmap('jet')  # 使用 Jet 色图
@@ -132,7 +132,7 @@ if __name__ == "__main__":
     parser.add_argument('--feat_path', default="WSI/features/uni_features/S202228530.pkl",type=str)
     parser.add_argument('--heatmap_type', default="attentionmap", type=str)
     parser.add_argument('--checkpoint', default="checkpoints/uni_lbmil.pth", type=str)
-    parser.add_argument('--scale_factor', default=128, type=int)
+    parser.add_argument('--scale_factor', default=32, type=int)
     parser.add_argument('--feat_size', default=1024, type=int)
 
     args = parser.parse_args()
