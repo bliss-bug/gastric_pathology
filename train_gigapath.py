@@ -1,6 +1,7 @@
+import os
+import random
 import argparse
 from math import inf
-import random
 from tqdm import tqdm
 import numpy as np
 
@@ -89,6 +90,9 @@ def main(args):
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
+    os.makedirs('outcome', exist_ok=True)
+    os.makedirs('best_checkpoints', exist_ok=True)
+
     extraction = args.data_path[0].split('/')[-1].split('_')[0]
     with open('outcome/gigapath.log', 'a+') as file:
         file.write('extraction = {}, seed = {}, fold = {}, lr = {:.2g}, weight_decay = {:.2g}, epochs = {}\n'.\
@@ -104,7 +108,7 @@ def main(args):
         val_loss, acc, precision, recall, f1, auc = val(valloader, model, criterion, device)
         if val_loss < min_loss:
             min_loss = val_loss
-            torch.save(model.state_dict(), "checkpoints/gigapath_slide.pth")
+            torch.save(model.state_dict(), f"best_checkpoints/gigapath_slide_{args.fold}.pth")
 
         print('val {}: loss = {:.4f} | acc = {:.4f} | precision = {:.4f} | recall = {:.4f} | f1 = {:.4f} | auc = {:.4f}\n'.format(i+1, val_loss, acc, precision, recall, f1, auc))
         with open('outcome/gigapath.log', 'a+') as file:
@@ -112,7 +116,7 @@ def main(args):
 
     model = ClassificationHead(args.input_dim, args.latent_dim, args.feat_layer, args.num_classes,
                                pretrained=args.pretrained).to(device)
-    model.load_state_dict(torch.load("checkpoints/gigapath_slide.pth"))
+    model.load_state_dict(torch.load(f"best_checkpoints/gigapath_slide_{args.fold}.pth"))
 
     test_loss, test_acc, test_precision, test_recall, test_f1, test_auc = val(testloader, model, criterion, device)
     print('test: loss = {:.4f} | acc = {:.4f} | precision = {:.4f} | recall = {:.4f} | f1 = {:.4f} | auc = {:.4f}\n'.format(test_loss, test_acc, test_precision, test_recall, test_f1, test_auc))

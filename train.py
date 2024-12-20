@@ -1,8 +1,8 @@
 import os
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
+import random
 import argparse
 from math import inf
-import random
 from tqdm import tqdm
 import numpy as np
 
@@ -173,6 +173,9 @@ def main(args):
     optimizer = torch.optim.AdamW(milnet.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs, 0.000005)
 
+    os.makedirs('outcome', exist_ok=True)
+    os.makedirs('best_checkpoints', exist_ok=True)
+
     extraction = args.data_path.split('/')[-1].split('_')[0] if isinstance(args.data_path, str) else args.data_path[0].split('/')[-1].split('_')[0]
     print('extraction = {}, seed = {}, fold = {}, lr = {:.2g}, weight_decay = {:.2g}, epochs = {}\n'.\
                    format(extraction, args.seed, args.fold, args.lr, args.weight_decay, args.epochs))
@@ -190,7 +193,7 @@ def main(args):
         val_loss, acc, precision, recall, f1, auc = val(valloader, milnet, criterion, device, args.model)
         if val_loss < min_loss:
             min_loss = val_loss
-            torch.save(milnet.state_dict(), "checkpoints/{}_{}.pth".format(extraction, args.model))
+            torch.save(milnet.state_dict(), "best_checkpoints/{}_{}_fold{}.pth".format(extraction, args.model, args.fold))
 
         print('val {}: loss = {:.4f} | acc = {:.4f} | precision = {:.4f} | recall = {:.4f} | f1 = {:.4f} | auc = {:.4f}\n'.format(i+1, val_loss, acc, precision, recall, f1, auc))
         with open('outcome/{}.log'.format(args.model), 'a+') as file:
@@ -217,7 +220,7 @@ def main(args):
     elif args.model == 'lbmil':
         milnet = lbmil.LearnableBiasMIL(input_size=args.feat_size, n_classes=args.num_classes).to(device)
     
-    milnet.load_state_dict(torch.load("checkpoints/{}_{}.pth".format(extraction, args.model)))
+    milnet.load_state_dict(torch.load("best_checkpoints/{}_{}_fold{}.pth".format(extraction, args.model, args.fold)))
 
     test_loss, test_acc, test_precision, test_recall, test_f1, test_auc = val(testloader, milnet, criterion, device, args.model)
     print('test: loss = {:.4f} | acc = {:.4f} | precision = {:.4f} | recall = {:.4f} | f1 = {:.4f} | auc = {:.4f}\n'.format(test_loss, test_acc, test_precision, test_recall, test_f1, test_auc))
