@@ -136,7 +136,7 @@ if __name__=='__main__':
     
     parser.add_argument('--seed', default=123, type=int)
     parser.add_argument('--fold', default=1, type=int)
-    parser.add_argument('--data_path', nargs='+', type=str, default=['WSI/features/gigapath_features', 'WSI/features2/gigapath_features'])
+    parser.add_argument('--data_path', nargs='+', type=str, default=['WSI/features/gigapath_features', 'WSI/features2/gigapath_features', 'WSI/features3/gigapath_features'])
     parser.add_argument('--label_path', default='labels/NDPI_labels.xlsx', type=str)
     parser.add_argument('--device', default='cuda:1', type=str)
     parser.add_argument('--pretrained', default='checkpoints/slide_encoder.pth', type=str)
