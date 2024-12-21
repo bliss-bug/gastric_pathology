@@ -108,7 +108,7 @@ def main(args):
         val_loss, acc, precision, recall, f1, auc = val(valloader, model, criterion, device)
         if val_loss < min_loss:
             min_loss = val_loss
-            torch.save(model.state_dict(), f"best_checkpoints/gigapath_slide_{args.fold}.pth")
+            torch.save(model.state_dict(), f"best_checkpoints/gigapath_slide_fold{args.fold}.pth")
 
         print('val {}: loss = {:.4f} | acc = {:.4f} | precision = {:.4f} | recall = {:.4f} | f1 = {:.4f} | auc = {:.4f}\n'.format(i+1, val_loss, acc, precision, recall, f1, auc))
         with open('outcome/gigapath.log', 'a+') as file:
@@ -116,7 +116,7 @@ def main(args):
 
     model = ClassificationHead(args.input_dim, args.latent_dim, args.feat_layer, args.num_classes,
                                pretrained=args.pretrained).to(device)
-    model.load_state_dict(torch.load(f"best_checkpoints/gigapath_slide_{args.fold}.pth"))
+    model.load_state_dict(torch.load(f"best_checkpoints/gigapath_slide_fold{args.fold}.pth"))
 
     test_loss, test_acc, test_precision, test_recall, test_f1, test_auc = val(testloader, model, criterion, device)
     print('test: loss = {:.4f} | acc = {:.4f} | precision = {:.4f} | recall = {:.4f} | f1 = {:.4f} | auc = {:.4f}\n'.format(test_loss, test_acc, test_precision, test_recall, test_f1, test_auc))
@@ -134,7 +134,7 @@ if __name__=='__main__':
     parser.add_argument('--latent_dim', default=768, type=int)
     parser.add_argument('--feat_layer', default='5-11', type=str)
     parser.add_argument('--lr', default=1e-4, type=float)
-    parser.add_argument('--weight_decay', default=5e-4, type=float)
+    parser.add_argument('--weight_decay', default=1e-3, type=float)
     parser.add_argument('--batch_size', default=1, type=int)
     parser.add_argument('--num_workers', default=8, type=int)
     

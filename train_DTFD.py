@@ -279,7 +279,7 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--num_classes', default=2, type=int)
-    parser.add_argument('--epochs', default=8, type=int)
+    parser.add_argument('--epochs', default=10, type=int)
     parser.add_argument('--feat_size', default=1024, type=int)
     parser.add_argument('--lr', default=1e-4, type=float)
     parser.add_argument('--weight_decay', default=2e-4, type=float)
