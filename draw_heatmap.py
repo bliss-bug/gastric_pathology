@@ -90,11 +90,12 @@ def generate_heatmap(ndpi_file, output_file, scale_factor, pos, weight):
     region = slide.read_region((0, 0), selected_level, level_dimensions).convert("RGB")
     img = np.array(region)
 
-    # 创建权重矩阵（例如，简单用 y 坐标生成梯度权重）
+    # 创建权重矩阵
+    size = int(256 / (20 / scale_factor))
     height, width, _ = img.shape
     weights = np.zeros((height, width))
     for (x, y), w in zip(pos, weight):
-        weights[y*8:y*8+8, x*8:x*8+8] = w
+        weights[y*size:y*size+size, x*size:x*size+size] = w
     
     # 创建热力图
     cmap = plt.get_cmap('jet')  # 使用 Jet 色图
@@ -136,7 +137,7 @@ if __name__ == "__main__":
     parser.add_argument('--feat_path', default="WSI/features/gigapath_features/S202212477.pkl",type=str)
     parser.add_argument('--heatmap_type', default="attentionmap", type=str)
     parser.add_argument('--checkpoint', default="best_checkpoints/gigapath_lbmil_fold2.pth", type=str)
-    parser.add_argument('--scale_factor', default=0.625, type=int)
+    parser.add_argument('--scale_factor', default=0.625, type=float)
     parser.add_argument('--feat_size', default=1536, type=int)
 
     args = parser.parse_args()
