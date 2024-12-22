@@ -1,3 +1,5 @@
+import os
+import math
 import argparse
 import pickle
 import openslide
@@ -78,7 +80,8 @@ def generate_heatmap(ndpi_file, output_file, scale_factor, pos, weight):
     
     # 使用较低分辨率层级读取图像
     num_levels = slide.level_count
-    selected_level = min(num_levels - 1, int(slide.level_downsamples.index(min(slide.level_downsamples, key=lambda x: abs(x - scale_factor)))))
+    MAG_BASE = slide.properties.get(openslide.PROPERTY_NAME_OBJECTIVE_POWER)
+    selected_level = min(num_levels - 1, int(math.log2(float(MAG_BASE) / scale_factor)))
     level_dimensions = slide.level_dimensions[selected_level]
     
     print(f"选择的层级为 Level {selected_level}，分辨率为 {level_dimensions}")
@@ -116,6 +119,7 @@ def main(args):
     milnet = LearnableBiasMIL(input_size=args.feat_size, n_classes=2).cuda(0)
     milnet.load_state_dict(torch.load(args.checkpoint))
 
+    os.makedirs(args.heatmap_type, exist_ok=True)
     if args.heatmap_type == "attentionmap":
         pos, weight = compute_attention(milnet, args.feat_path)
     elif args.heatmap_type == "gradcam":
@@ -128,12 +132,12 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--ndpi_file', default="WSI/GPI/S202228530.ndpi", type=str)
-    parser.add_argument('--feat_path', default="WSI/features/uni_features/S202228530.pkl",type=str)
+    parser.add_argument('--ndpi_file', default="WSI/GPI/S202212477.ndpi", type=str)
+    parser.add_argument('--feat_path', default="WSI/features/gigapath_features/S202212477.pkl",type=str)
     parser.add_argument('--heatmap_type', default="attentionmap", type=str)
-    parser.add_argument('--checkpoint', default="checkpoints/uni_lbmil.pth", type=str)
-    parser.add_argument('--scale_factor', default=32, type=int)
-    parser.add_argument('--feat_size', default=1024, type=int)
+    parser.add_argument('--checkpoint', default="best_checkpoints/gigapath_lbmil_fold2.pth", type=str)
+    parser.add_argument('--scale_factor', default=0.625, type=int)
+    parser.add_argument('--feat_size', default=1536, type=int)
 
     args = parser.parse_args()
     main(args)

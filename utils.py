@@ -34,6 +34,7 @@ def load_data(data_path, label_path, fold):
     split = list(kf.split(feats_path))[(fold-1)%5]
     
     train_path, test_path = [feats_path[i] for i in split[0]], [feats_path[i] for i in split[1]]
+    print(f'fold{fold} test data: {test_path}')
 
     random.shuffle(train_path)
     div = int(len(train_path)*0.875)
@@ -85,6 +86,6 @@ def get_cam_1d(classifier, features):
 
 
 if __name__ == '__main__':
-    random.seed(2048)
-    load_data(['WSI/features/gigapath_features'], 'labels/NDPI_labels.xlsx', 5)
+    random.seed(460)
+    load_data(['WSI/features/uni_features', 'WSI/features2/uni_features', 'WSI/features3/uni_features'], 'labels/NDPI_labels.xlsx', 5)
     #load_test_data('WSI/features/gigapath_features', 'labels/NDPI_labels.xlsx')
