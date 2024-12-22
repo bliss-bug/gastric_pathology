@@ -137,7 +137,7 @@ if __name__ == "__main__":
     parser.add_argument('--feat_path', default="WSI/features/gigapath_features/S202212477.pkl",type=str)
     parser.add_argument('--heatmap_type', default="attentionmap", type=str)
     parser.add_argument('--checkpoint', default="best_checkpoints/gigapath_lbmil_fold2.pth", type=str)
-    parser.add_argument('--scale_factor', default=0.625, type=float)
+    parser.add_argument('--scale_factor', default=0.625, type=int)
     parser.add_argument('--feat_size', default=1536, type=int)
 
     args = parser.parse_args()
