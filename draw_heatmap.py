@@ -28,7 +28,7 @@ def compute_attention(milnet: LearnableBiasMIL, feat_path):
     weight = (weight - weight.min()) / (weight.max() - weight.min())
 
     sorted_idx = np.argsort(-weight)
-    print(pos[sorted_idx[:20]])
+    print(pos[sorted_idx[:10]])
 
     return pos, weight
 
@@ -68,7 +68,7 @@ def compute_gradcam(model: LearnableBiasMIL, feat_path, target_class=1):
 
     cam = cam.detach().cpu().numpy()
     sorted_idx = np.argsort(-cam)
-    print(pos[sorted_idx[:20]])
+    print(pos[sorted_idx[:10]])
 
     return pos, cam
 
@@ -133,8 +133,8 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--ndpi_file', default="WSI/GPI/S202212477.ndpi", type=str)
-    parser.add_argument('--feat_path', default="WSI/features/gigapath_features/S202212477.pkl",type=str)
+    parser.add_argument('--ndpi_file', default="WSI/GPI/S202222247.ndpi", type=str)
+    parser.add_argument('--feat_path', default="WSI/features/gigapath_features/S202222247.pkl",type=str)
     parser.add_argument('--heatmap_type', default="attentionmap", type=str)
     parser.add_argument('--checkpoint', default="best_checkpoints/gigapath_lbmil_fold2.pth", type=str)
     parser.add_argument('--scale_factor', default=0.625, type=float)
