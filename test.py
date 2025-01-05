@@ -109,7 +109,7 @@ def main(args):
         milnet = lbmil.LearnableBiasMIL(input_size=args.feat_size, n_classes=args.num_classes).to(device)
 
     extraction = args.data_path.split('/')[-1].split('_')[0]
-    milnet.load_state_dict(torch.load("checkpoints/{}_{}.pth".format(extraction, args.model)))
+    milnet.load_state_dict(torch.load("best_checkpoints/{}_{}_fold{}.pth".format(extraction, args.model, args.fold)))
     test_loss, test_acc, test_precision, test_recall, test_f1, test_auc = test(testloader, milnet, criterion, device, args.model)
     
     print('extraction = {}, model = {}'.format(extraction, args.model))
@@ -126,8 +126,9 @@ if __name__=='__main__':
     parser.add_argument('--num_workers', default=4, type=int)
     
     parser.add_argument('--model', default='abmil', type=str)
+    parser.add_argument('--fold', default=1, type=int)
     parser.add_argument('--data_path', default='WSI/features/uni_features', type=str)
-    parser.add_argument('--label_path', default='labels/NDPI_labels.xlsx', type=str)
+    parser.add_argument('--label_path', default='labels/内科labels.xlsx', type=str)
     parser.add_argument('--device', default='cuda:0', type=str)
 
     args = parser.parse_args()

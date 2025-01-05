@@ -115,7 +115,7 @@ def main(args):
     attCls = Attention_with_Classifier(L=args.feat_size, num_cls=args.num_classes).to(device)
 
     extraction = args.data_path.split('/')[-1].split('_')[0]
-    dic = torch.load("checkpoints/{}_{}.pth".format(extraction, args.model))
+    dic = torch.load("best_checkpoints/{}_{}_fold{}.pth".format(extraction, args.model, args.fold))
     classifier.load_state_dict(dic['classifier'])
     dimReduction.load_state_dict(dic['dim_reduction'])
     attention.load_state_dict(dic['attention'])
@@ -138,8 +138,9 @@ if __name__=='__main__':
     parser.add_argument('--num_workers', default=4, type=int)
     
     parser.add_argument('--model', default='DTFD', type=str)
+    parser.add_argument('--fold', default=1, type=int)
     parser.add_argument('--data_path', default='WSI/features/uni_features', type=str)
-    parser.add_argument('--label_path', default='labels/NDPI_labels.xlsx', type=str)
+    parser.add_argument('--label_path', default='labels/内科labels.xlsx', type=str)
     parser.add_argument('--device', default='cuda:0', type=str)
     parser.add_argument('--distill', default='AFS', type=str)
 
