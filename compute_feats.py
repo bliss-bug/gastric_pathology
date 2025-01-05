@@ -82,7 +82,7 @@ if __name__=='__main__':
     parser.add_argument('--data_path', default='WSI/GPI/single', type=str)
     parser.add_argument('--save_path', default='WSI/features', type=str)
     parser.add_argument('--num_workers', default=4, type=int)
-    parser.add_argument('--batch_size', default=128, type=int)
+    parser.add_argument('--batch_size', default=256, type=int)
 
     args = parser.parse_args()
 
