@@ -13,7 +13,7 @@ def load_data(data_path, label_path, fold):
     labels = {}
     for i, row in enumerate(rows):
         if i>0:
-            id, label = str(row[2].value), row[3].value
+            id, label = str(row[1].value), row[2].value
             labels[id] = label
 
     if isinstance(data_path, str):

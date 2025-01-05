@@ -5,16 +5,6 @@ import openslide
 from pathlib import Path
 
 
-workbook = openpyxl.load_workbook('NDPI_labels.xlsx')
-sheet = workbook.active
-rows = sheet.iter_rows()
-
-ori_names = []
-
-for i, row in enumerate(rows):
-    id = str(row[2].value)
-    ori_names.append(id)
-
 '''
 os.makedirs('WSI/features3/gigapath_features', exist_ok=True)
 os.makedirs('WSI/features3/uni_features', exist_ok=True)
@@ -38,11 +28,5 @@ names = []
 
 for i, row in enumerate(rows):
     if i > 0:
-        id = str(row[2].value)
+        id = str(row[1].value)
         names.append(id)
-
-cnt = 0
-
-for name in names:
-    if name not in set(ori_names):
-        print(name)
