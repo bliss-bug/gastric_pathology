@@ -17,10 +17,11 @@ def compute_attention(milnet: LearnableBiasMIL, feat_path):
         data = pickle.load(f)
     feat = np.array([d['feature'] for d in data])
     pos = np.array([[int(d['file_name'].split('_')[0]), int(d['file_name'].split('_')[1])] for d in data])
-    
+    x = torch.tensor(np.concatenate([feat, pos], axis=1), dtype=torch.float).cuda(0)
+
     milnet.eval()
     with torch.no_grad():
-        _, _, Y_prob, attn = milnet(torch.tensor(np.concatenate([feat, pos], axis=1), dtype=torch.float).cuda(0))
+        _, _, Y_prob, attn = milnet(x)
         print(Y_prob)
         weight = torch.sum(attn.squeeze(), (0, 1)).cpu().numpy()
 
@@ -42,7 +43,8 @@ def compute_gradcam(model: LearnableBiasMIL, feat_path, target_class=1):
     x = torch.tensor(np.concatenate([feat, pos], axis=1), dtype=torch.float).cuda(0)
 
     model.eval()
-    logits, _, Y_prob, attn = model(x)
+    logits, Y_hat, Y_prob, attn = model(x)
+    pred_class = Y_hat.item()
     print(Y_prob)
 
     # Get target class score
@@ -133,8 +135,8 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--ndpi_file', default="WSI/GPI/S202222247.ndpi", type=str)
-    parser.add_argument('--feat_path', default="WSI/features/gigapath_features/S202222247.pkl",type=str)
+    parser.add_argument('--ndpi_file', default="WSI/GPI/S202024379.ndpi", type=str)
+    parser.add_argument('--feat_path', default="WSI/features/gigapath_features/S202024379.pkl",type=str)
     parser.add_argument('--heatmap_type', default="attentionmap", type=str)
     parser.add_argument('--checkpoint', default="best_checkpoints/gigapath_lbmil_fold2.pth", type=str)
     parser.add_argument('--scale_factor', default=0.625, type=float)
