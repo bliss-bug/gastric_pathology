@@ -121,13 +121,13 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--num_classes', default=2, type=int)
-    parser.add_argument('--feat_size', default=1024, type=int)
+    parser.add_argument('--feat_size', default=1536, type=int)
     parser.add_argument('--batch_size', default=1, type=int)
     parser.add_argument('--num_workers', default=4, type=int)
     
-    parser.add_argument('--model', default='abmil', type=str)
+    parser.add_argument('--model', default='lbmil', type=str)
     parser.add_argument('--fold', default=1, type=int)
-    parser.add_argument('--data_path', default='WSI/features/uni_features', type=str)
+    parser.add_argument('--data_path', default='WSI/features_in/gigapath_features', type=str)
     parser.add_argument('--label_path', default='labels/内科labels.xlsx', type=str)
     parser.add_argument('--device', default='cuda:0', type=str)
 
