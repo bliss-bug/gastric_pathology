@@ -688,3 +688,348 @@ train 10: loss = 0.5060
 val 10: loss = 0.6343 | acc = 0.7333 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.8864
 test: loss = 0.6740 | acc = 0.5862 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6765
 
+extraction = gigapath, seed = 2025, fold = 1, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.6067
+val 1: loss = 0.5399 | acc = 0.8095 | precision = 0.8571 | recall = 0.6667 | f1 = 0.7500 | auc = 0.9444
+train 2: loss = 0.4811
+val 2: loss = 0.4485 | acc = 0.7143 | precision = 1.0000 | recall = 0.3333 | f1 = 0.5000 | auc = 0.9815
+train 3: loss = 0.2858
+val 3: loss = 0.3360 | acc = 0.9048 | precision = 1.0000 | recall = 0.7778 | f1 = 0.8750 | auc = 1.0000
+train 4: loss = 0.2170
+val 4: loss = 0.2750 | acc = 0.9524 | precision = 1.0000 | recall = 0.8889 | f1 = 0.9412 | auc = 0.9907
+train 5: loss = 0.1786
+val 5: loss = 0.2474 | acc = 0.9048 | precision = 0.8889 | recall = 0.8889 | f1 = 0.8889 | auc = 0.9907
+train 6: loss = 0.1367
+val 6: loss = 0.2883 | acc = 0.8571 | precision = 1.0000 | recall = 0.6667 | f1 = 0.8000 | auc = 1.0000
+train 7: loss = 0.0936
+val 7: loss = 0.2018 | acc = 0.9048 | precision = 1.0000 | recall = 0.7778 | f1 = 0.8750 | auc = 1.0000
+train 8: loss = 0.0614
+val 8: loss = 0.2459 | acc = 0.9048 | precision = 1.0000 | recall = 0.7778 | f1 = 0.8750 | auc = 0.9907
+train 9: loss = 0.0427
+val 9: loss = 0.2566 | acc = 0.9048 | precision = 1.0000 | recall = 0.7778 | f1 = 0.8750 | auc = 0.9815
+train 10: loss = 0.0365
+val 10: loss = 0.2509 | acc = 0.9048 | precision = 1.0000 | recall = 0.7778 | f1 = 0.8750 | auc = 0.9815
+test: loss = 0.5592 | acc = 0.7317 | precision = 0.6667 | recall = 0.5333 | f1 = 0.5926 | auc = 0.8256
+
+extraction = gigapath, seed = 2025, fold = 2, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.6377
+val 1: loss = 0.5346 | acc = 0.9524 | precision = 1.0000 | recall = 0.8889 | f1 = 0.9412 | auc = 0.9722
+train 2: loss = 0.4929
+val 2: loss = 0.5429 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.9722
+train 3: loss = 0.3223
+val 3: loss = 0.3418 | acc = 0.9524 | precision = 1.0000 | recall = 0.8889 | f1 = 0.9412 | auc = 1.0000
+train 4: loss = 0.2159
+val 4: loss = 0.2715 | acc = 1.0000 | precision = 1.0000 | recall = 1.0000 | f1 = 1.0000 | auc = 1.0000
+train 5: loss = 0.1713
+val 5: loss = 0.3626 | acc = 0.8095 | precision = 0.6923 | recall = 1.0000 | f1 = 0.8182 | auc = 1.0000
+train 6: loss = 0.1347
+val 6: loss = 0.2336 | acc = 0.9524 | precision = 0.9000 | recall = 1.0000 | f1 = 0.9474 | auc = 1.0000
+train 7: loss = 0.0947
+val 7: loss = 0.2120 | acc = 0.9524 | precision = 0.9000 | recall = 1.0000 | f1 = 0.9474 | auc = 0.9907
+train 8: loss = 0.0635
+val 8: loss = 0.2010 | acc = 0.9048 | precision = 0.8889 | recall = 0.8889 | f1 = 0.8889 | auc = 0.9907
+train 9: loss = 0.0488
+val 9: loss = 0.2054 | acc = 0.9048 | precision = 0.8889 | recall = 0.8889 | f1 = 0.8889 | auc = 0.9815
+train 10: loss = 0.0435
+val 10: loss = 0.2063 | acc = 0.9048 | precision = 0.8889 | recall = 0.8889 | f1 = 0.8889 | auc = 0.9815
+test: loss = 0.7061 | acc = 0.7317 | precision = 0.5000 | recall = 0.6364 | f1 = 0.5600 | auc = 0.7636
+
+extraction = gigapath, seed = 2025, fold = 3, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.6335
+val 1: loss = 0.5778 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.8942
+train 2: loss = 0.4329
+val 2: loss = 0.6661 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.9231
+train 3: loss = 0.3400
+val 3: loss = 0.4121 | acc = 0.8571 | precision = 1.0000 | recall = 0.6250 | f1 = 0.7692 | auc = 0.9231
+train 4: loss = 0.2445
+val 4: loss = 0.3439 | acc = 0.9048 | precision = 1.0000 | recall = 0.7500 | f1 = 0.8571 | auc = 0.9327
+train 5: loss = 0.1950
+val 5: loss = 0.4841 | acc = 0.6667 | precision = 0.5385 | recall = 0.8750 | f1 = 0.6667 | auc = 0.9038
+train 6: loss = 0.1616
+val 6: loss = 0.3583 | acc = 0.8095 | precision = 0.7000 | recall = 0.8750 | f1 = 0.7778 | auc = 0.9231
+train 7: loss = 0.1311
+val 7: loss = 0.3416 | acc = 0.8571 | precision = 1.0000 | recall = 0.6250 | f1 = 0.7692 | auc = 0.9327
+train 8: loss = 0.1005
+val 8: loss = 0.3405 | acc = 0.8571 | precision = 1.0000 | recall = 0.6250 | f1 = 0.7692 | auc = 0.9231
+train 9: loss = 0.0801
+val 9: loss = 0.3396 | acc = 0.8571 | precision = 1.0000 | recall = 0.6250 | f1 = 0.7692 | auc = 0.9231
+train 10: loss = 0.0711
+val 10: loss = 0.3401 | acc = 0.8095 | precision = 0.7500 | recall = 0.7500 | f1 = 0.7500 | auc = 0.9231
+test: loss = 0.4266 | acc = 0.8049 | precision = 0.8000 | recall = 0.7059 | f1 = 0.7500 | auc = 0.8971
+
+extraction = gigapath, seed = 2025, fold = 4, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.6033
+val 1: loss = 0.5590 | acc = 0.7143 | precision = 0.7143 | recall = 0.5556 | f1 = 0.6250 | auc = 0.8611
+train 2: loss = 0.4335
+val 2: loss = 0.6808 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.9074
+train 3: loss = 0.3272
+val 3: loss = 0.4033 | acc = 0.7619 | precision = 0.8333 | recall = 0.5556 | f1 = 0.6667 | auc = 0.9444
+train 4: loss = 0.2543
+val 4: loss = 0.3467 | acc = 0.8095 | precision = 0.8571 | recall = 0.6667 | f1 = 0.7500 | auc = 0.9630
+train 5: loss = 0.2167
+val 5: loss = 0.3113 | acc = 0.9048 | precision = 0.8889 | recall = 0.8889 | f1 = 0.8889 | auc = 0.9444
+train 6: loss = 0.1506
+val 6: loss = 0.3110 | acc = 0.8095 | precision = 0.7778 | recall = 0.7778 | f1 = 0.7778 | auc = 0.9352
+train 7: loss = 0.1271
+val 7: loss = 0.3730 | acc = 0.8571 | precision = 1.0000 | recall = 0.6667 | f1 = 0.8000 | auc = 0.9537
+train 8: loss = 0.0968
+val 8: loss = 0.3539 | acc = 0.8571 | precision = 1.0000 | recall = 0.6667 | f1 = 0.8000 | auc = 0.9537
+train 9: loss = 0.0759
+val 9: loss = 0.3369 | acc = 0.8571 | precision = 1.0000 | recall = 0.6667 | f1 = 0.8000 | auc = 0.9537
+train 10: loss = 0.0673
+val 10: loss = 0.3387 | acc = 0.8571 | precision = 1.0000 | recall = 0.6667 | f1 = 0.8000 | auc = 0.9444
+test: loss = 0.4109 | acc = 0.7805 | precision = 0.6667 | recall = 0.6154 | f1 = 0.6400 | auc = 0.8764
+
+extraction = gigapath, seed = 2025, fold = 5, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.5608
+val 1: loss = 0.5819 | acc = 0.7619 | precision = 0.8571 | recall = 0.6000 | f1 = 0.7059 | auc = 0.8909
+train 2: loss = 0.4722
+val 2: loss = 0.4983 | acc = 0.8095 | precision = 0.8750 | recall = 0.7000 | f1 = 0.7778 | auc = 0.9182
+train 3: loss = 0.3170
+val 3: loss = 0.4568 | acc = 0.7619 | precision = 0.7778 | recall = 0.7000 | f1 = 0.7368 | auc = 0.8636
+train 4: loss = 0.2308
+val 4: loss = 0.4945 | acc = 0.7619 | precision = 0.7778 | recall = 0.7000 | f1 = 0.7368 | auc = 0.8455
+train 5: loss = 0.1766
+val 5: loss = 0.5178 | acc = 0.7619 | precision = 0.7273 | recall = 0.8000 | f1 = 0.7619 | auc = 0.8273
+train 6: loss = 0.1171
+val 6: loss = 0.6361 | acc = 0.7143 | precision = 0.6667 | recall = 0.8000 | f1 = 0.7273 | auc = 0.8182
+train 7: loss = 0.1147
+val 7: loss = 0.6004 | acc = 0.7619 | precision = 0.7778 | recall = 0.7000 | f1 = 0.7368 | auc = 0.8091
+train 8: loss = 0.0787
+val 8: loss = 0.6285 | acc = 0.8095 | precision = 0.8750 | recall = 0.7000 | f1 = 0.7778 | auc = 0.8000
+train 9: loss = 0.0571
+val 9: loss = 0.6321 | acc = 0.7619 | precision = 0.7778 | recall = 0.7000 | f1 = 0.7368 | auc = 0.8091
+train 10: loss = 0.0554
+val 10: loss = 0.6603 | acc = 0.8095 | precision = 0.8750 | recall = 0.7000 | f1 = 0.7778 | auc = 0.8000
+test: loss = 0.3547 | acc = 0.8500 | precision = 0.8000 | recall = 0.6667 | f1 = 0.7273 | auc = 0.9226
+
+extraction = uni, seed = 2025, fold = 1, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.5008
+val 1: loss = 0.6286 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.9074
+train 2: loss = 0.3271
+val 2: loss = 0.5090 | acc = 0.6667 | precision = 1.0000 | recall = 0.2222 | f1 = 0.3636 | auc = 0.9815
+train 3: loss = 0.2533
+val 3: loss = 0.2960 | acc = 0.9524 | precision = 1.0000 | recall = 0.8889 | f1 = 0.9412 | auc = 1.0000
+train 4: loss = 0.2143
+val 4: loss = 0.4459 | acc = 0.7143 | precision = 1.0000 | recall = 0.3333 | f1 = 0.5000 | auc = 1.0000
+train 5: loss = 0.1638
+val 5: loss = 0.1679 | acc = 1.0000 | precision = 1.0000 | recall = 1.0000 | f1 = 1.0000 | auc = 1.0000
+train 6: loss = 0.1225
+val 6: loss = 0.1236 | acc = 1.0000 | precision = 1.0000 | recall = 1.0000 | f1 = 1.0000 | auc = 1.0000
+train 7: loss = 0.0883
+val 7: loss = 0.0906 | acc = 1.0000 | precision = 1.0000 | recall = 1.0000 | f1 = 1.0000 | auc = 1.0000
+train 8: loss = 0.0667
+val 8: loss = 0.0952 | acc = 1.0000 | precision = 1.0000 | recall = 1.0000 | f1 = 1.0000 | auc = 1.0000
+train 9: loss = 0.0528
+val 9: loss = 0.0943 | acc = 1.0000 | precision = 1.0000 | recall = 1.0000 | f1 = 1.0000 | auc = 1.0000
+train 10: loss = 0.0446
+val 10: loss = 0.1004 | acc = 1.0000 | precision = 1.0000 | recall = 1.0000 | f1 = 1.0000 | auc = 1.0000
+test: loss = 0.7489 | acc = 0.7561 | precision = 0.7778 | recall = 0.4667 | f1 = 0.5833 | auc = 0.8026
+
+extraction = uni, seed = 2025, fold = 2, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.4978
+val 1: loss = 0.5676 | acc = 0.6190 | precision = 1.0000 | recall = 0.1111 | f1 = 0.2000 | auc = 0.9074
+train 2: loss = 0.3290
+val 2: loss = 0.4445 | acc = 0.6667 | precision = 1.0000 | recall = 0.2222 | f1 = 0.3636 | auc = 0.9630
+train 3: loss = 0.2475
+val 3: loss = 0.2570 | acc = 0.9048 | precision = 0.8889 | recall = 0.8889 | f1 = 0.8889 | auc = 0.9815
+train 4: loss = 0.1996
+val 4: loss = 0.2822 | acc = 0.9048 | precision = 1.0000 | recall = 0.7778 | f1 = 0.8750 | auc = 1.0000
+train 5: loss = 0.1360
+val 5: loss = 0.2131 | acc = 0.9048 | precision = 0.8182 | recall = 1.0000 | f1 = 0.9000 | auc = 1.0000
+train 6: loss = 0.1056
+val 6: loss = 0.2039 | acc = 0.9048 | precision = 0.8182 | recall = 1.0000 | f1 = 0.9000 | auc = 1.0000
+train 7: loss = 0.0714
+val 7: loss = 0.1384 | acc = 0.9524 | precision = 1.0000 | recall = 0.8889 | f1 = 0.9412 | auc = 1.0000
+train 8: loss = 0.0420
+val 8: loss = 0.1725 | acc = 0.9524 | precision = 1.0000 | recall = 0.8889 | f1 = 0.9412 | auc = 0.9815
+train 9: loss = 0.0301
+val 9: loss = 0.1479 | acc = 0.9524 | precision = 1.0000 | recall = 0.8889 | f1 = 0.9412 | auc = 1.0000
+train 10: loss = 0.0238
+val 10: loss = 0.1544 | acc = 0.9524 | precision = 1.0000 | recall = 0.8889 | f1 = 0.9412 | auc = 0.9907
+test: loss = 1.0368 | acc = 0.6341 | precision = 0.3750 | recall = 0.5455 | f1 = 0.4444 | auc = 0.7182
+
+extraction = uni, seed = 2025, fold = 3, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.5092
+val 1: loss = 0.5582 | acc = 0.6667 | precision = 1.0000 | recall = 0.1250 | f1 = 0.2222 | auc = 0.8654
+train 2: loss = 0.3366
+val 2: loss = 0.5191 | acc = 0.7143 | precision = 1.0000 | recall = 0.2500 | f1 = 0.4000 | auc = 0.8750
+train 3: loss = 0.2499
+val 3: loss = 0.4699 | acc = 0.7619 | precision = 0.7143 | recall = 0.6250 | f1 = 0.6667 | auc = 0.8269
+train 4: loss = 0.2095
+val 4: loss = 0.4059 | acc = 0.8095 | precision = 0.8333 | recall = 0.6250 | f1 = 0.7143 | auc = 0.8750
+train 5: loss = 0.1569
+val 5: loss = 0.4313 | acc = 0.8095 | precision = 0.7500 | recall = 0.7500 | f1 = 0.7500 | auc = 0.8750
+train 6: loss = 0.1344
+val 6: loss = 0.4620 | acc = 0.7619 | precision = 0.7143 | recall = 0.6250 | f1 = 0.6667 | auc = 0.8365
+train 7: loss = 0.0991
+val 7: loss = 0.4529 | acc = 0.8095 | precision = 0.8333 | recall = 0.6250 | f1 = 0.7143 | auc = 0.8558
+train 8: loss = 0.0769
+val 8: loss = 0.5014 | acc = 0.8095 | precision = 0.8333 | recall = 0.6250 | f1 = 0.7143 | auc = 0.8269
+train 9: loss = 0.0561
+val 9: loss = 0.4985 | acc = 0.8095 | precision = 0.8333 | recall = 0.6250 | f1 = 0.7143 | auc = 0.8269
+train 10: loss = 0.0475
+val 10: loss = 0.5038 | acc = 0.8095 | precision = 0.8333 | recall = 0.6250 | f1 = 0.7143 | auc = 0.8365
+test: loss = 0.5196 | acc = 0.7805 | precision = 0.7500 | recall = 0.7059 | f1 = 0.7273 | auc = 0.8186
+
+extraction = uni, seed = 2025, fold = 4, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.5100
+val 1: loss = 0.5466 | acc = 0.6667 | precision = 1.0000 | recall = 0.2222 | f1 = 0.3636 | auc = 0.8796
+train 2: loss = 0.3521
+val 2: loss = 0.4617 | acc = 0.8571 | precision = 0.8750 | recall = 0.7778 | f1 = 0.8235 | auc = 0.9167
+train 3: loss = 0.2996
+val 3: loss = 0.4300 | acc = 0.8571 | precision = 0.8750 | recall = 0.7778 | f1 = 0.8235 | auc = 0.8981
+train 4: loss = 0.2594
+val 4: loss = 0.4034 | acc = 0.8571 | precision = 0.8750 | recall = 0.7778 | f1 = 0.8235 | auc = 0.9444
+train 5: loss = 0.2075
+val 5: loss = 0.3391 | acc = 0.9048 | precision = 0.8889 | recall = 0.8889 | f1 = 0.8889 | auc = 0.9259
+train 6: loss = 0.1585
+val 6: loss = 0.3410 | acc = 0.9048 | precision = 0.8889 | recall = 0.8889 | f1 = 0.8889 | auc = 0.9167
+train 7: loss = 0.1161
+val 7: loss = 0.3869 | acc = 0.9048 | precision = 0.8889 | recall = 0.8889 | f1 = 0.8889 | auc = 0.8889
+train 8: loss = 0.0910
+val 8: loss = 0.3873 | acc = 0.8571 | precision = 0.8000 | recall = 0.8889 | f1 = 0.8421 | auc = 0.8981
+train 9: loss = 0.0614
+val 9: loss = 0.3836 | acc = 0.9048 | precision = 0.8889 | recall = 0.8889 | f1 = 0.8889 | auc = 0.8704
+train 10: loss = 0.0533
+val 10: loss = 0.3916 | acc = 0.9048 | precision = 0.8889 | recall = 0.8889 | f1 = 0.8889 | auc = 0.8796
+test: loss = 0.3732 | acc = 0.8537 | precision = 0.8889 | recall = 0.6154 | f1 = 0.7273 | auc = 0.9231
+
+extraction = uni, seed = 2025, fold = 5, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.5818
+val 1: loss = 0.5943 | acc = 0.6190 | precision = 1.0000 | recall = 0.2000 | f1 = 0.3333 | auc = 0.8364
+train 2: loss = 0.3637
+val 2: loss = 0.6701 | acc = 0.5714 | precision = 1.0000 | recall = 0.1000 | f1 = 0.1818 | auc = 0.9182
+train 3: loss = 0.2916
+val 3: loss = 0.4798 | acc = 0.7619 | precision = 1.0000 | recall = 0.5000 | f1 = 0.6667 | auc = 0.9364
+train 4: loss = 0.2517
+val 4: loss = 0.4077 | acc = 0.8095 | precision = 0.7500 | recall = 0.9000 | f1 = 0.8182 | auc = 0.9182
+train 5: loss = 0.1913
+val 5: loss = 0.3720 | acc = 0.8571 | precision = 1.0000 | recall = 0.7000 | f1 = 0.8235 | auc = 0.9545
+train 6: loss = 0.1571
+val 6: loss = 0.4391 | acc = 0.8571 | precision = 1.0000 | recall = 0.7000 | f1 = 0.8235 | auc = 0.9727
+train 7: loss = 0.1192
+val 7: loss = 0.2850 | acc = 0.8571 | precision = 0.8889 | recall = 0.8000 | f1 = 0.8421 | auc = 0.9727
+train 8: loss = 0.0937
+val 8: loss = 0.3194 | acc = 0.9048 | precision = 1.0000 | recall = 0.8000 | f1 = 0.8889 | auc = 0.9727
+train 9: loss = 0.0740
+val 9: loss = 0.3227 | acc = 0.8571 | precision = 1.0000 | recall = 0.7000 | f1 = 0.8235 | auc = 0.9727
+train 10: loss = 0.0657
+val 10: loss = 0.2699 | acc = 0.8571 | precision = 0.8889 | recall = 0.8000 | f1 = 0.8421 | auc = 0.9727
+test: loss = 0.4187 | acc = 0.8000 | precision = 0.6667 | recall = 0.6667 | f1 = 0.6667 | auc = 0.8839
+
+extraction = resnet50, seed = 2025, fold = 1, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.6454
+val 1: loss = 0.7195 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.5000
+train 2: loss = 0.5768
+val 2: loss = 0.7157 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.5833
+train 3: loss = 0.4953
+val 3: loss = 0.7067 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6111
+train 4: loss = 0.4765
+val 4: loss = 0.7022 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6481
+train 5: loss = 0.4508
+val 5: loss = 0.6910 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6574
+train 6: loss = 0.4669
+val 6: loss = 0.6949 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6574
+train 7: loss = 0.4598
+val 7: loss = 0.6996 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6574
+train 8: loss = 0.4698
+val 8: loss = 0.7068 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6574
+train 9: loss = 0.4694
+val 9: loss = 0.7058 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6574
+train 10: loss = 0.4758
+val 10: loss = 0.7057 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6574
+test: loss = 0.6522 | acc = 0.6341 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.7077
+
+extraction = resnet50, seed = 2025, fold = 2, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.6503
+val 1: loss = 0.7042 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.4815
+train 2: loss = 0.5499
+val 2: loss = 0.7103 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.5370
+train 3: loss = 0.4864
+val 3: loss = 0.7049 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.5648
+train 4: loss = 0.4692
+val 4: loss = 0.6896 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.5833
+train 5: loss = 0.4561
+val 5: loss = 0.6836 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6111
+train 6: loss = 0.4551
+val 6: loss = 0.6839 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6296
+train 7: loss = 0.4521
+val 7: loss = 0.6918 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6019
+train 8: loss = 0.4487
+val 8: loss = 0.6947 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6019
+train 9: loss = 0.4474
+val 9: loss = 0.6930 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6019
+train 10: loss = 0.4463
+val 10: loss = 0.6932 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6111
+test: loss = 0.6045 | acc = 0.7317 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.5848
+
+extraction = resnet50, seed = 2025, fold = 3, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.6472
+val 1: loss = 0.6719 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.5577
+train 2: loss = 0.5644
+val 2: loss = 0.6779 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.5769
+train 3: loss = 0.4816
+val 3: loss = 0.6909 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6154
+train 4: loss = 0.4534
+val 4: loss = 0.6660 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6538
+train 5: loss = 0.4423
+val 5: loss = 0.6692 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6346
+train 6: loss = 0.4377
+val 6: loss = 0.6671 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6635
+train 7: loss = 0.4360
+val 7: loss = 0.6741 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6538
+train 8: loss = 0.4326
+val 8: loss = 0.6753 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6442
+train 9: loss = 0.4314
+val 9: loss = 0.6734 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6538
+train 10: loss = 0.4300
+val 10: loss = 0.6738 | acc = 0.6190 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6538
+test: loss = 0.6849 | acc = 0.5854 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.8186
+
+extraction = resnet50, seed = 2025, fold = 4, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.6594
+val 1: loss = 0.6997 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6296
+train 2: loss = 0.5744
+val 2: loss = 0.7108 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6574
+train 3: loss = 0.4935
+val 3: loss = 0.7125 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6574
+train 4: loss = 0.4662
+val 4: loss = 0.7016 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6759
+train 5: loss = 0.4523
+val 5: loss = 0.7001 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6759
+train 6: loss = 0.4473
+val 6: loss = 0.6963 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6759
+train 7: loss = 0.4461
+val 7: loss = 0.7038 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6759
+train 8: loss = 0.4425
+val 8: loss = 0.7000 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6759
+train 9: loss = 0.4415
+val 9: loss = 0.6986 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6759
+train 10: loss = 0.4397
+val 10: loss = 0.6994 | acc = 0.5714 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6759
+test: loss = 0.6248 | acc = 0.6829 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.5330
+
+extraction = resnet50, seed = 2025, fold = 5, lr = 0.0001, weight_decay = 0.001, epochs = 10
+train 1: loss = 0.6502
+val 1: loss = 0.7328 | acc = 0.5238 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.5545
+train 2: loss = 0.5555
+val 2: loss = 0.7635 | acc = 0.5238 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.5727
+train 3: loss = 0.4838
+val 3: loss = 0.7543 | acc = 0.5238 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6273
+train 4: loss = 0.4618
+val 4: loss = 0.7270 | acc = 0.5238 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6636
+train 5: loss = 0.4524
+val 5: loss = 0.7469 | acc = 0.5238 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6636
+train 6: loss = 0.4480
+val 6: loss = 0.7621 | acc = 0.5238 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6182
+train 7: loss = 0.4449
+val 7: loss = 0.7445 | acc = 0.5238 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6545
+train 8: loss = 0.4441
+val 8: loss = 0.7409 | acc = 0.5238 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6545
+train 9: loss = 0.4419
+val 9: loss = 0.7416 | acc = 0.5238 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6455
+train 10: loss = 0.4413
+val 10: loss = 0.7395 | acc = 0.5238 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.6455
+test: loss = 0.6089 | acc = 0.7000 | precision = 0.0000 | recall = 0.0000 | f1 = 0.0000 | auc = 0.8899
+
