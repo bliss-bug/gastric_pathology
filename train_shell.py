@@ -7,8 +7,8 @@ parser.add_argument('--device', default='cuda:2', type=str)
 args = parser.parse_args()
 
 extractions = ['gigapath', 'uni', 'resnet50']
-#models = ['abmil', 'dsmil', 'clam_sb', 'clam_mb', 'transmil', 'rrtmil']
-models = []
+models = ['abmil', 'dsmil', 'clam_sb', 'clam_mb', 'transmil', 'rrtmil']
+models = ['longmil']
 
 size = {'gigapath': 1536, 'uni': 1024, 'resnet50': 1024}
 device = args.device
@@ -30,8 +30,9 @@ for extraction in extractions:
             --fold={i} --device={device} --epochs={epochs}'
         os.system(cmd)
 '''
-
-
+        
+'''
 for i in range(1, 6):
     cmd = f'python train_gigapath.py --fold={i} --device={device} --epochs={epochs}'
     os.system(cmd)
+'''
