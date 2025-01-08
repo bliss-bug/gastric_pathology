@@ -139,7 +139,7 @@ if __name__=='__main__':
     
     parser.add_argument('--model', default='DTFD', type=str)
     parser.add_argument('--fold', default=1, type=int)
-    parser.add_argument('--data_path', default='WSI/features/uni_features', type=str)
+    parser.add_argument('--data_path', default='WSI/features_in/uni_features', type=str)
     parser.add_argument('--label_path', default='labels/内科labels.xlsx', type=str)
     parser.add_argument('--device', default='cuda:0', type=str)
     parser.add_argument('--distill', default='AFS', type=str)
