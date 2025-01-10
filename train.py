@@ -153,9 +153,9 @@ def main(args):
     if args.model == 'abmil':
         milnet = abmil.Attention(in_size=args.feat_size, out_size=args.num_classes).to(device)
     elif args.model == 'clam_sb':
-        milnet = clam.CLAM_SB(dropout=0.25, n_classes=args.num_classes, embed_dim=args.feat_size).to(device)
+        milnet = clam.CLAM_SB(dropout=0.25, n_classes=args.num_classes, embed_dim=args.feat_size, subtyping=True).to(device)
     elif args.model == 'clam_mb':
-        milnet = clam.CLAM_MB(dropout=0.25, n_classes=args.num_classes, embed_dim=args.feat_size).to(device)
+        milnet = clam.CLAM_MB(dropout=0.25, n_classes=args.num_classes, embed_dim=args.feat_size, subtyping=True).to(device)
     elif args.model == 'dsmil':
         i_classifier = dsmil.FCLayer(in_size=args.feat_size, out_size=args.num_classes).to(device)
         b_classifier = dsmil.BClassifier(input_size=args.feat_size, output_class=args.num_classes).to(device)
@@ -177,8 +177,8 @@ def main(args):
     os.makedirs('best_checkpoints', exist_ok=True)
 
     extraction = args.data_path.split('/')[-1].split('_')[0] if isinstance(args.data_path, str) else args.data_path[0].split('/')[-1].split('_')[0]
-    print('extraction = {}, seed = {}, fold = {}, lr = {:.2g}, weight_decay = {:.2g}, epochs = {}\n'.\
-                   format(extraction, args.seed, args.fold, args.lr, args.weight_decay, args.epochs))
+    print('extraction = {}, model = {}, seed = {}, fold = {}, lr = {:.2g}, weight_decay = {:.2g}, epochs = {}\n'.\
+                   format(extraction, args.model, args.seed, args.fold, args.lr, args.weight_decay, args.epochs))
     with open('outcome/{}.log'.format(args.model), 'a+') as file:
         file.write('extraction = {}, seed = {}, fold = {}, lr = {:.2g}, weight_decay = {:.2g}, epochs = {}\n'.\
                    format(extraction, args.seed, args.fold, args.lr, args.weight_decay, args.epochs))
@@ -204,9 +204,9 @@ def main(args):
     if args.model == 'abmil':
         milnet = abmil.Attention(in_size=args.feat_size, out_size=args.num_classes).to(device)
     elif args.model == 'clam_sb':
-        milnet = clam.CLAM_SB(dropout=0.25, n_classes=args.num_classes, embed_dim=args.feat_size).to(device)
+        milnet = clam.CLAM_SB(dropout=0.25, n_classes=args.num_classes, embed_dim=args.feat_size, subtyping=True).to(device)
     elif args.model == 'clam_mb':
-        milnet = clam.CLAM_MB(dropout=0.25, n_classes=args.num_classes, embed_dim=args.feat_size).to(device)
+        milnet = clam.CLAM_MB(dropout=0.25, n_classes=args.num_classes, embed_dim=args.feat_size, subtyping=True).to(device)
     elif args.model =='dsmil':
         i_classifier = dsmil.FCLayer(in_size=args.feat_size, out_size=args.num_classes).to(device)
         b_classifier = dsmil.BClassifier(input_size=args.feat_size, output_class=args.num_classes).to(device)

@@ -224,8 +224,8 @@ def main(args):
     os.makedirs('best_checkpoints', exist_ok=True)
 
     extraction = args.data_path.split('/')[-1].split('_')[0] if isinstance(args.data_path, str) else args.data_path[0].split('/')[-1].split('_')[0]
-    print('extraction = {}, seed = {}, fold = {}, lr = {:.2g}, weight_decay = {:.2g}, epochs = {}, distill = {}\n'.\
-                   format(extraction, args.seed, args.fold, args.lr, args.weight_decay, args.epochs, args.distill))
+    print('extraction = {}, model = {}, seed = {}, fold = {}, lr = {:.2g}, weight_decay = {:.2g}, epochs = {}, distill = {}\n'.\
+                   format(extraction, args.model, args.seed, args.fold, args.lr, args.weight_decay, args.epochs, args.distill))
     with open('outcome/{}.log'.format(args.model), 'a+') as file:
         file.write('extraction = {}, seed = {}, fold = {}, lr = {:.2g}, weight_decay = {:.2g}, epochs = {}, distill = {}\n'.\
                    format(extraction, args.seed, args.fold, args.lr, args.weight_decay, args.epochs, args.distill))
