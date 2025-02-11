@@ -114,7 +114,7 @@ class DeepZoomImageTiler(object):
     def _tile_done(self):
         self._processed += 1
         count, total = self._processed, self._dz.tile_count
-        if count % 100 == 0 or count == total:
+        if count % 10000 == 0 or count == total:
             print("Tiling %s: wrote %d/%d tiles" % (
                     self._associated or 'slide', count, total),
                     end='\r', file=sys.stderr)
@@ -207,7 +207,8 @@ def nested_patches(img_slide, out_base, level=(0,), ext='jpeg'):
         for i, patch in enumerate(patches):
             patch_name = patch.split(os.sep)[-1]
             shutil.move(patch, os.path.join(bag_path, patch_name))
-            sys.stdout.write('\r Patch [%d/%d]' % (i+1, len(patches)))
+            if i % 1000 == 0 or i == len(patches) - 1:
+                sys.stdout.write('\r Patch [%d/%d]' % (i+1, len(patches)))
         print('Done.')
     else:
         level_factor = 2**int(level[1]-level[0])
