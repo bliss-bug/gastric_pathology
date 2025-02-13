@@ -61,6 +61,35 @@ def load_data(data_path, label_path, fold):
 
 
 
+def load_trainval_data(data_path, label_path):
+    workbook = openpyxl.load_workbook(label_path)
+    sheet = workbook.active
+    rows = sheet.iter_rows()
+
+    labels = {}
+    for i, row in enumerate(rows):
+        if i > 0:
+            id, label = str(row[1].value), row[2].value
+            labels[id] = label
+
+    if isinstance(data_path, str):
+        feats_path = os.listdir(data_path)
+        feats_path = [os.path.join(data_path, feat_path) for feat_path in feats_path]
+    elif isinstance(data_path, list):
+        feats_path = []
+        for path in data_path:
+            temp_path = [os.path.join(path, feat_path) for feat_path in os.listdir(path)]
+            feats_path.extend(temp_path)
+
+    random.shuffle(feats_path)
+
+    div = int(len(feats_path)*0.9)
+    train_path, val_path = feats_path[:div], feats_path[div:]
+    
+    return train_path, val_path, labels
+
+
+
 def load_test_data(data_path, label_path):
     workbook = openpyxl.load_workbook(label_path)
     sheet = workbook.active
@@ -68,7 +97,7 @@ def load_test_data(data_path, label_path):
 
     labels = {}
     for i, row in enumerate(rows):
-        if i>0:
+        if i > 0:
             id, label = str(row[1].value), row[2].value
             labels[id] = label
 
