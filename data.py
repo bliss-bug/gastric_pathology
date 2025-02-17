@@ -45,7 +45,7 @@ class PathologyDataset(Dataset):
         feat = np.array([d['feature'] for d in data])
         pos = np.array([[int(d['file_name'].split('_')[0]), int(d['file_name'].split('_')[1])] for d in data])
 
-        id = self.feats_path[idx].split('/')[-1].split('.')[0]
+        id = self.feats_path[idx].split('/')[-1].split('.')[0].split('-')[0].split('H')[0]
         label = self.labels[id]
 
         return feat, pos, label
