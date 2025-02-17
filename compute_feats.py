@@ -78,7 +78,7 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--model', default='gigapath', type=str)
-    parser.add_argument('--device', default='cuda:2', type=str)
+    parser.add_argument('--device', default='cuda:0', type=str)
     parser.add_argument('--data_path', default='WSI/GPI/single', type=str)
     parser.add_argument('--save_path', default='WSI/features', type=str)
     parser.add_argument('--num_workers', default=4, type=int)
