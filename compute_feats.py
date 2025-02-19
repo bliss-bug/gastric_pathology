@@ -59,7 +59,7 @@ def main(args):
     )
 
     dataset = PatchDataset(transform=transform, slide_dir=args.data_path)
-    dataloader = DataLoader(dataset, batch_size=args.batch_size, num_workers=args.num_workers, pin_memory=True)
+    dataloader = DataLoader(dataset, batch_size=args.batch_size, num_workers=args.num_workers, pin_memory=False)
 
     compute_feats(model, dataloader, device, os.path.join(args.save_path, args.model+'_features'))
 
