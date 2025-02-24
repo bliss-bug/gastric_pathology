@@ -178,6 +178,7 @@ def main(args):
     os.makedirs(save_dir, exist_ok=True)
 
     with open(f'{save_dir}/{current_time}.log', 'w') as f:
+        f.write(f'data_path = {args.data_path}\n')
         f.write('extraction = {}, seed = {}, lr = {:.2g}, weight_decay = {:.2g}, epochs = {}\n'.\
             format(extraction, args.seed, args.lr, args.weight_decay, args.epochs))
 
