@@ -3,6 +3,7 @@ import random
 import openpyxl
 import torch
 from sklearn.model_selection import KFold
+from collections import defaultdict
 
 
 def load_data(data_path, label_path, fold):
@@ -81,10 +82,20 @@ def load_trainval_data(data_path, label_path):
             temp_path = [os.path.join(path, feat_path) for feat_path in os.listdir(path)]
             feats_path.extend(temp_path)
 
-    random.shuffle(feats_path)
+    #random.shuffle(feats_path)
+    mp = defaultdict(list)
+    for feat_path in feats_path:
+        id = feat_path.split('/')[-1].split('.')[0].split('-')[0].split('H')[0]
+        mp[id].append(feat_path)
+    parents = list(mp.keys())
+    random.shuffle(parents)
 
-    div = int(len(feats_path)*0.9)
-    train_path, val_path = feats_path[:div], feats_path[div:]
+    div = int(len(parents)*0.9)
+    train_path, val_path = [], []
+    for i in range(div):
+        train_path.extend(mp[parents[i]])
+    for i in range(div, len(parents)):
+        val_path.extend(mp[parents[i]])
     
     return train_path, val_path, labels
 
@@ -115,6 +126,7 @@ def get_cam_1d(classifier, features):
 
 
 if __name__ == '__main__':
-    random.seed(460)
-    load_data(['WSI/features/uni_features', 'WSI/features2/uni_features', 'WSI/features3/uni_features'], 'labels/NDPI_labels.xlsx', 5)
+    random.seed(42)
+    #load_data(['WSI/features/uni_features', 'WSI/features2/uni_features', 'WSI/features3/uni_features'], 'labels/NDPI_labels.xlsx', 5)
     #load_test_data('WSI/features/gigapath_features', 'labels/NDPI_labels.xlsx')
+    load_trainval_data(['WSI/features_out/gigapath_features', 'WSI/features_in/gigapath_features'], 'labels/all_labels.xlsx')
