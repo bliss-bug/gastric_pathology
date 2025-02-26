@@ -182,7 +182,7 @@ def main(args):
         f.write('extraction = {}, seed = {}, lr = {:.2g}, weight_decay = {:.2g}, epochs = {}\n'.\
             format(extraction, args.seed, args.lr, args.weight_decay, args.epochs))
 
-    min_loss = inf
+    max_auc = 0
     for i in range(args.epochs):
         loss = train(trainloader, milnet, criterion, optimizer, device, args.model)
         print('train {}: loss = {:.4f}\n'.format(i+1, loss))
@@ -195,8 +195,8 @@ def main(args):
         with open(f'{save_dir}/{current_time}.log', 'a') as file:
             file.write('val {}: loss = {:.4f} | acc = {:.4f} | precision = {:.4f} | recall = {:.4f} | f1 = {:.4f} | auc = {:.4f}\n'.format(i+1, val_loss, acc, precision, recall, f1, auc))
 
-        if val_loss < min_loss:
-            min_loss = val_loss
+        if auc > max_auc:
+            max_auc = auc
             torch.save(milnet.state_dict(), f"{save_dir}/{extraction}_{args.model}.pth")
             print(f'The best checkpoint at epoch {i+1} is saved\n')
             with open(f'{save_dir}/{current_time}.log', 'a') as file:
@@ -210,7 +210,7 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--num_classes', default=2, type=int)
-    parser.add_argument('--epochs', default=15, type=int)
+    parser.add_argument('--epochs', default=10, type=int)
     parser.add_argument('--feat_size', default=1536, type=int)
     parser.add_argument('--lr', default=1e-4, type=float)
     parser.add_argument('--weight_decay', default=5e-4, type=float)
