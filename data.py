@@ -48,7 +48,7 @@ class PathologyDataset(Dataset):
         id = self.feats_path[idx].split('/')[-1].split('.')[0].split('-')[0].split('H')[0]
         label = self.labels[id]
 
-        return feat, pos, label
+        return feat, pos, label, id
 
     def __len__(self):
         return len(self.feats_path)

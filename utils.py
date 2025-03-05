@@ -129,4 +129,4 @@ if __name__ == '__main__':
     random.seed(42)
     #load_data(['WSI/features/uni_features', 'WSI/features2/uni_features', 'WSI/features3/uni_features'], 'labels/NDPI_labels.xlsx', 5)
     #load_test_data('WSI/features/gigapath_features', 'labels/NDPI_labels.xlsx')
-    load_trainval_data(['WSI/features_out/gigapath_features', 'WSI/features_in/gigapath_features'], 'labels/all_labels.xlsx')
+    load_trainval_data(['WSI/features_in/gigapath_features'], 'labels/all_labels.xlsx')

@@ -27,7 +27,7 @@ def test(dataloader, classifier, dimReduction, attention, UClassifier,
     y_true, y_pred, y_score = [], [], []
 
     with torch.no_grad():
-        for feats, _, labels in tqdm(dataloader):
+        for feats, _, labels, _ in tqdm(dataloader):
             feats, labels = feats.squeeze().to(device), labels.long().to(device) # [N, C], [1]
 
             slide_pseudo_feat = []

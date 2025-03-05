@@ -19,7 +19,7 @@ def train(dataloader, model, criterion, optimizer, device):
     model.train()
     losses, num = 0, 0
 
-    for feats, poses, labels in tqdm(dataloader):
+    for feats, poses, labels, _ in tqdm(dataloader):
         optimizer.zero_grad()
         feats, poses, labels = feats.to(device), poses.to(device), labels.long().to(device)
         logits = model(feats, poses)
@@ -40,7 +40,7 @@ def val(dataloader, model, criterion, device):
     y_true, y_pred, y_score = [], [], []
 
     with torch.no_grad():
-        for feats, poses, labels in tqdm(dataloader):
+        for feats, poses, labels, _ in tqdm(dataloader):
             feats, poses, labels = feats.to(device), poses.to(device), labels.long().to(device)
             logits = model(feats, poses)
             loss = criterion(logits, labels)

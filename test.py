@@ -18,7 +18,7 @@ def test(dataloader, milnet, criterion, device, model='abmil'):
     y_true, y_pred, y_score = [], [], []
 
     with torch.no_grad():
-        for feats, poses, labels in tqdm(dataloader):
+        for feats, poses, labels, _ in tqdm(dataloader):
             feats, poses, labels = feats.squeeze().to(device), poses.squeeze().to(device), labels.long().to(device)
             if model == 'abmil':
                 bag_prediction, _, _ = milnet(feats)

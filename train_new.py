@@ -21,7 +21,7 @@ def train(dataloader, milnet, criterion, optimizer, device, model='lbmil'):
     milnet.train()
     losses, num = 0, 0
 
-    for feats, poses, labels in tqdm(dataloader):
+    for feats, poses, labels, id in tqdm(dataloader):
         optimizer.zero_grad()
         feats, poses, labels = feats.squeeze().to(device), poses.squeeze().to(device), labels.long().to(device) # [N, C], [N, 2],[1]
         if model == 'abmil':
@@ -70,7 +70,7 @@ def val(dataloader, milnet, criterion, device, model='lbmil'):
     y_true, y_pred, y_score = [], [], []
 
     with torch.no_grad():
-        for feats, poses, labels in tqdm(dataloader):
+        for feats, poses, labels, id in tqdm(dataloader):
             feats, poses, labels = feats.squeeze().to(device), poses.squeeze().to(device), labels.long().to(device)
             if model == 'abmil':
                 bag_prediction, _, _ = milnet(feats)
