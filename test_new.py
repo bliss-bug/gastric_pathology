@@ -109,7 +109,7 @@ def main(args):
 
     milnet.load_state_dict(torch.load(args.checkpoint))
     extraction = args.data_path.split('/')[-1].split('_')[0]
-    test_loss, test_acc, test_precision, test_recall, test_f1, test_auc = test(testloader, milnet, criterion, device, args.model)    
+    test_loss, test_acc, test_precision, test_recall, test_f1, test_auc = test(testloader, milnet, criterion, device, args.model)
 
     print('extraction = {}, model = {}'.format(extraction, args.model))
     print('test: loss = {:.4f} | acc = {:.4f} | precision = {:.4f} | recall = {:.4f} | f1 = {:.4f} | auc = {:.4f}\n'.format(test_loss, test_acc, test_precision, test_recall, test_f1, test_auc))

@@ -200,7 +200,7 @@ def main(args):
             torch.save(milnet.state_dict(), f"{save_dir}/{extraction}_{args.model}.pth")
             print(f'The best checkpoint at epoch {i+1} is saved\n')
             with open(f'{save_dir}/{current_time}.log', 'a') as file:
-                file.write(f'The best checkpoint at epoch {i+1} is saved\n')
+                file.write(f'The best checkpoint at epoch {i+1} is saved\n\n')
 
         scheduler.step()
 
@@ -219,7 +219,7 @@ if __name__=='__main__':
     
     parser.add_argument('--model', default='lbmil', type=str)
     parser.add_argument('--seed', default=42, type=int)
-    parser.add_argument('--data_path', nargs='+', type=str, default=['WSI/features_out/gigapath_features', 'WSI/features_in/gigapath_features'])
+    parser.add_argument('--data_path', nargs='+', type=str, default=['WSI/features/gigapath_features', 'WSI/features2/gigapath_features', 'WSI/features_in/gigapath_features'])
     parser.add_argument('--label_path', default='labels/all_labels.xlsx', type=str)
     parser.add_argument('--device', default='cuda:1', type=str)
 
