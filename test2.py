@@ -44,6 +44,9 @@ def test(dataloader, milnet, criterion, device, model='lbmil'):
     specificity = sum((y_true == 0) & (y_pred == 0)) / sum(y_true == 0)
     auc = roc_auc_score(y_true, y_score)
 
+    for k, v in score_dict.items():
+        print(k, v)
+
     return acc, precision, recall, f1, specificity, auc
 
 
@@ -76,7 +79,7 @@ def main(args):
         milnet = lbmil.LearnableBiasMIL(input_size=args.feat_size, n_classes=args.num_classes).to(device)
 
     milnet.load_state_dict(torch.load(args.checkpoint))
-    extraction = args.data_path.split('/')[-1].split('_')[0]
+    extraction = args.data_path.split('/')[-1].split('_')[0] if isinstance(args.data_path, str) else args.data_path[0].split('/')[-1].split('_')[0]
     test_acc, test_precision, test_recall, test_f1, test_specificity, test_auc = test(testloader, milnet, criterion, device, args.model)
 
     print('extraction = {}, model = {}'.format(extraction, args.model))
@@ -93,7 +96,7 @@ if __name__=='__main__':
     parser.add_argument('--num_workers', default=4, type=int)
     
     parser.add_argument('--model', default='lbmil', type=str)
-    parser.add_argument('--data_path', default='WSI/features_out_test/gigapath_features', type=str)
+    parser.add_argument('--data_path', default=['WSI/features_in_test/gigapath_features', 'WSI/features_in_test_single/gigapath_features'], type=str)
     parser.add_argument('--label_path', default='labels/all_labels.xlsx', type=str)
     parser.add_argument('--checkpoint', default='work_dirs/gigapath_lbmil/20250312_002548/gigapath_lbmil.pth', type=str)
     parser.add_argument('--device', default='cuda:0', type=str)
