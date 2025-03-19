@@ -60,7 +60,7 @@ def test(dataloader, milnet, criterion, device, model='lbmil'):
                 x = torch.cat([feats, poses], dim=1)
                 bag_prediction, Y_hat, Y_prob, attention = milnet(x)
                 loss = criterion(bag_prediction, labels)
-                y_pred.extend([int(torch.squeeze(Y_prob)[1].item() > 0.1)])
+                y_pred.extend([int(torch.squeeze(Y_prob)[1].item() > 0.2)])
                 y_score.extend([torch.squeeze(Y_prob)[1].cpu().numpy()])
 
             score_dict[id[0]] = y_score[-1].item()
@@ -78,6 +78,9 @@ def test(dataloader, milnet, criterion, device, model='lbmil'):
     f1 = f1_score(y_true, y_pred)
     specificity = sum((y_true == 0) & (y_pred == 0)) / sum(y_true == 0)
     auc = roc_auc_score(y_true, y_score)
+
+    for k, v in score_dict.items():
+        print(k, v)
 
     return losses / num, acc, precision, recall, f1, specificity, auc
 
@@ -129,7 +132,7 @@ if __name__=='__main__':
     parser.add_argument('--num_workers', default=4, type=int)
     
     parser.add_argument('--model', default='lbmil', type=str)
-    parser.add_argument('--data_path', default='WSI/features_in_test_single/gigapath_features', type=str)
+    parser.add_argument('--data_path', default='WSI/features_out_test_single/gigapath_features', type=str)
     parser.add_argument('--label_path', default='labels/all_labels.xlsx', type=str)
     parser.add_argument('--checkpoint', default='work_dirs/gigapath_lbmil/20250312_002548/gigapath_lbmil.pth', type=str)
     parser.add_argument('--device', default='cuda:0', type=str)
