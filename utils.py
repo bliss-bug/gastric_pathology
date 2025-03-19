@@ -112,8 +112,14 @@ def load_test_data(data_path, label_path):
             id, label = str(row[1].value), row[2].value
             labels[id] = label
 
-    feats_path = os.listdir(data_path)
-    feats_path = [os.path.join(data_path, feat_path) for feat_path in feats_path]
+    if isinstance(data_path, str):
+        feats_path = os.listdir(data_path)
+        feats_path = [os.path.join(data_path, feat_path) for feat_path in feats_path]
+    elif isinstance(data_path, list):
+        feats_path = []
+        for path in data_path:
+            temp_path = [os.path.join(path, feat_path) for feat_path in os.listdir(path)]
+            feats_path.extend(temp_path)
     
     return feats_path, labels
 
