@@ -16,6 +16,7 @@ def test(dataloader, milnet, criterion, device, model='lbmil'):
     milnet.eval()
     losses, num = 0, 0
     y_true, y_pred, y_score = [], [], []
+    score_dict = {}
 
     with torch.no_grad():
         for feats, poses, labels, id in tqdm(dataloader):
@@ -59,9 +60,10 @@ def test(dataloader, milnet, criterion, device, model='lbmil'):
                 x = torch.cat([feats, poses], dim=1)
                 bag_prediction, Y_hat, Y_prob, attention = milnet(x)
                 loss = criterion(bag_prediction, labels)
-                y_pred.extend([int(torch.squeeze(Y_prob)[1].item() > 0.2)])
+                y_pred.extend([int(torch.squeeze(Y_prob)[1].item() > 0.1)])
                 y_score.extend([torch.squeeze(Y_prob)[1].cpu().numpy()])
 
+            score_dict[id[0]] = y_score[-1].item()
             losses += loss.item()
             num += 1
             y_true.extend(labels.cpu().numpy())
@@ -74,9 +76,10 @@ def test(dataloader, milnet, criterion, device, model='lbmil'):
     precision = precision_score(y_true, y_pred)
     recall = recall_score(y_true, y_pred)
     f1 = f1_score(y_true, y_pred)
+    specificity = sum((y_true == 0) & (y_pred == 0)) / sum(y_true == 0)
     auc = roc_auc_score(y_true, y_score)
 
-    return losses / num, acc, precision, recall, f1, auc
+    return losses / num, acc, precision, recall, f1, specificity, auc
 
 
 
@@ -109,10 +112,11 @@ def main(args):
 
     milnet.load_state_dict(torch.load(args.checkpoint))
     extraction = args.data_path.split('/')[-1].split('_')[0]
-    test_loss, test_acc, test_precision, test_recall, test_f1, test_auc = test(testloader, milnet, criterion, device, args.model)
+    test_loss, test_acc, test_precision, test_recall, test_f1, test_specificity, test_auc = test(testloader, milnet, criterion, device, args.model)
 
     print('extraction = {}, model = {}'.format(extraction, args.model))
-    print('test: loss = {:.4f} | acc = {:.4f} | precision = {:.4f} | recall = {:.4f} | f1 = {:.4f} | auc = {:.4f}\n'.format(test_loss, test_acc, test_precision, test_recall, test_f1, test_auc))
+    print('test: loss = {:.4f} | acc = {:.4f} | precision = {:.4f} | recall = {:.4f} | f1 = {:.4f} | specificity = {:.4f} | auc = {:.4f}\n'.
+    format(test_loss, test_acc, test_precision, test_recall, test_f1, test_specificity, test_auc))
 
 
 
@@ -125,9 +129,9 @@ if __name__=='__main__':
     parser.add_argument('--num_workers', default=4, type=int)
     
     parser.add_argument('--model', default='lbmil', type=str)
-    parser.add_argument('--data_path', default='WSI/features_in2/gigapath_features', type=str)
+    parser.add_argument('--data_path', default='WSI/features_in_test_single/gigapath_features', type=str)
     parser.add_argument('--label_path', default='labels/all_labels.xlsx', type=str)
-    parser.add_argument('--checkpoint', default='work_dirs/gigapath_lbmil/20250224_110145/gigapath_lbmil.pth', type=str)
+    parser.add_argument('--checkpoint', default='work_dirs/gigapath_lbmil/20250312_002548/gigapath_lbmil.pth', type=str)
     parser.add_argument('--device', default='cuda:0', type=str)
 
     args = parser.parse_args()

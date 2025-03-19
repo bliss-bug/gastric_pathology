@@ -1,3 +1,5 @@
+import os
+os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
 import argparse
 from collections import defaultdict
 from tqdm import tqdm
@@ -93,7 +95,7 @@ if __name__=='__main__':
     parser.add_argument('--model', default='lbmil', type=str)
     parser.add_argument('--data_path', default='WSI/features_out_test/gigapath_features', type=str)
     parser.add_argument('--label_path', default='labels/all_labels.xlsx', type=str)
-    parser.add_argument('--checkpoint', default='work_dirs/gigapath_lbmil/20250310_211210/gigapath_lbmil.pth', type=str)
+    parser.add_argument('--checkpoint', default='work_dirs/gigapath_lbmil/20250312_002548/gigapath_lbmil.pth', type=str)
     parser.add_argument('--device', default='cuda:0', type=str)
 
     args = parser.parse_args()
