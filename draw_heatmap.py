@@ -135,10 +135,10 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--ndpi_file', default="WSI/GPI/S202024379.ndpi", type=str)
-    parser.add_argument('--feat_path', default="WSI/features/gigapath_features/S202024379.pkl",type=str)
-    parser.add_argument('--heatmap_type', default="attentionmap", type=str)
-    parser.add_argument('--checkpoint', default="best_checkpoints/gigapath_lbmil_fold2.pth", type=str)
+    parser.add_argument('--ndpi_file', default="WSI/GPI_out/S202222713-3.ndpi", type=str)
+    parser.add_argument('--feat_path', default="WSI/features_out_test_single/gigapath_features/S202222713-3.pkl",type=str)
+    parser.add_argument('--heatmap_type', default="gradcam", type=str)
+    parser.add_argument('--checkpoint', default="work_dirs/gigapath_lbmil/20250312_002548/gigapath_lbmil.pth", type=str)
     parser.add_argument('--scale_factor', default=0.625, type=float)
     parser.add_argument('--feat_size', default=1536, type=int)
 
