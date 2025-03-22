@@ -29,7 +29,7 @@ def compute_attention(milnet: LearnableBiasMIL, feat_path):
     weight = (weight - weight.min()) / (weight.max() - weight.min())
 
     sorted_idx = np.argsort(-weight)
-    print(pos[sorted_idx[:10]])
+    print(pos[sorted_idx[:10]].tolist())
 
     return pos, weight
 
@@ -70,7 +70,7 @@ def compute_gradcam(model: LearnableBiasMIL, feat_path, target_class=1):
 
     cam = cam.detach().cpu().numpy()
     sorted_idx = np.argsort(-cam)
-    print(pos[sorted_idx[:10]])
+    print(pos[sorted_idx[:10]].tolist())
 
     return pos, cam
 
@@ -135,8 +135,8 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--ndpi_file', default="WSI/GPI_out/S202222713-3.ndpi", type=str)
-    parser.add_argument('--feat_path', default="WSI/features_out_test_single/gigapath_features/S202222713-3.pkl",type=str)
+    parser.add_argument('--ndpi_file', default="WSI/GPI_out/S202010667HE-4.ndpi", type=str)
+    parser.add_argument('--feat_path', default="WSI/features_out_test_single/gigapath_features/S202010667HE-4.pkl",type=str)
     parser.add_argument('--heatmap_type', default="gradcam", type=str)
     parser.add_argument('--checkpoint', default="work_dirs/gigapath_lbmil/20250312_002548/gigapath_lbmil.pth", type=str)
     parser.add_argument('--scale_factor', default=0.625, type=float)
