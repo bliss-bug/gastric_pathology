@@ -17,6 +17,7 @@ def test(dataloader, milnet, criterion, device, model='lbmil'):
     losses, num = 0, 0
     y_true, y_pred, y_score = [], [], []
     score_dict = {}
+    threshold = 0.2
 
     with torch.no_grad():
         for feats, poses, labels, id in tqdm(dataloader):
@@ -24,12 +25,12 @@ def test(dataloader, milnet, criterion, device, model='lbmil'):
             if model == 'abmil':
                 bag_prediction, _, _ = milnet(feats)
                 loss = criterion(bag_prediction, labels)
-                y_pred.extend([torch.squeeze(bag_prediction).argmax().cpu().numpy()])
+                y_pred.extend([torch.squeeze(bag_prediction).softmax(dim=0)[1].item() > threshold])
                 y_score.extend([torch.squeeze(bag_prediction).softmax(dim=0)[1].cpu().numpy()])
             elif model in ['clam_sb', 'clam_mb']:
                 bag_prediction, Y_prob, Y_hat, _, _ = milnet(feats)
                 loss = criterion(bag_prediction, labels)
-                y_pred.extend([torch.squeeze(Y_hat).cpu().numpy()])
+                y_pred.extend([torch.squeeze(Y_prob)[1].item() > threshold])
                 y_score.extend([torch.squeeze(Y_prob)[1].cpu().numpy()])
             elif model == 'dsmil':
                 ins_prediction, bag_prediction, attention, atten_B = milnet(feats)
@@ -37,30 +38,30 @@ def test(dataloader, milnet, criterion, device, model='lbmil'):
                 bag_loss = criterion(bag_prediction, labels)
                 max_loss = criterion(max_prediction.unsqueeze(0), labels)
                 loss = 0.5*bag_loss + 0.5*max_loss
-                y_pred.extend([torch.squeeze(0.5*bag_prediction+0.5*max_prediction).argmax().cpu().numpy()])
+                y_pred.extend([torch.squeeze(0.5*bag_prediction+0.5*max_prediction).softmax(dim=0)[1].item() > threshold])
                 y_score.extend([torch.squeeze(0.5*bag_prediction+0.5*max_prediction).softmax(dim=0)[1].cpu().numpy()])
             elif model == 'transmil':
                 output = milnet(feats)
                 bag_prediction, Y_prob, Y_hat = output['logits'], output['Y_prob'], output['Y_hat']
                 loss = criterion(bag_prediction, labels)
-                y_pred.extend([torch.squeeze(Y_hat).cpu().numpy()])
+                y_pred.extend([torch.squeeze(Y_prob)[1].item() > threshold])
                 y_score.extend([torch.squeeze(Y_prob)[1].cpu().numpy()])
             elif model == 'rrtmil':
                 bag_prediction = milnet(feats)
                 loss = criterion(bag_prediction, labels)
-                y_pred.extend([torch.squeeze(bag_prediction).argmax().cpu().numpy()])
+                y_pred.extend([torch.squeeze(bag_prediction).softmax(dim=0)[1].item() > threshold])
                 y_score.extend([torch.squeeze(bag_prediction).softmax(dim=0)[1].cpu().numpy()])
             elif model == 'longmil':
                 x = torch.cat([feats, poses], dim=1)
                 bag_prediction, Y_hat, Y_prob, attention = milnet(x)
                 loss = criterion(bag_prediction, labels)
-                y_pred.extend([torch.squeeze(Y_hat).cpu().numpy()])
+                y_pred.extend([torch.squeeze(Y_prob)[1].item() > threshold])
                 y_score.extend([torch.squeeze(Y_prob)[1].cpu().numpy()])
             elif model == 'lbmil':
                 x = torch.cat([feats, poses], dim=1)
                 bag_prediction, Y_hat, Y_prob, attention = milnet(x)
                 loss = criterion(bag_prediction, labels)
-                y_pred.extend([int(torch.squeeze(Y_prob)[1].item() > 0.2)])
+                y_pred.extend([torch.squeeze(Y_prob)[1].item() > threshold])
                 y_score.extend([torch.squeeze(Y_prob)[1].cpu().numpy()])
 
             score_dict[id[0]] = y_score[-1].item()
@@ -78,10 +79,10 @@ def test(dataloader, milnet, criterion, device, model='lbmil'):
     f1 = f1_score(y_true, y_pred)
     specificity = sum((y_true == 0) & (y_pred == 0)) / sum(y_true == 0)
     auc = roc_auc_score(y_true, y_score)
-
+    '''
     for k, v in score_dict.items():
         print(k, v)
-
+    '''
     return losses / num, acc, precision, recall, f1, specificity, auc
 
 
