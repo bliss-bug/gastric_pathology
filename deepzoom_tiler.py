@@ -246,7 +246,7 @@ if __name__ == '__main__':
     parser.add_argument('-e', '--overlap', type=int, default=0, help='Overlap of adjacent tiles [0]')
     parser.add_argument('-f', '--format', type=str, default='jpeg', help='Image format for tiles [jpeg]')
     parser.add_argument('-v', '--slide_format', type=str, default='ndpi', help='Image format for tiles [ndpi]')
-    parser.add_argument('-j', '--workers', type=int, default=4, help='Number of worker processes to start [4]')
+    parser.add_argument('-j', '--workers', type=int, default=16, help='Number of worker processes to start [16]')
     parser.add_argument('-q', '--quality', type=int, default=85, help='JPEG compression quality [85]')
     parser.add_argument('-s', '--tile_size', type=int, default=256, help='Tile size [256]')
     parser.add_argument('-b', '--base_mag', type=float, default=20, help='Maximum magnification for patch extraction [20]')
