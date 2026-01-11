@@ -109,7 +109,7 @@ def main(args):
         milnet = lbmil.LearnableBiasMIL(input_size=args.feat_size, n_classes=args.num_classes).to(device)
 
     extraction = args.data_path.split('/')[-1].split('_')[0]
-    milnet.load_state_dict(torch.load("best_checkpoints/{}_{}_fold{}.pth".format(extraction, args.model, args.fold)))
+    milnet.load_state_dict(torch.load("best_checkpoints/{}_{}_fold{}.pth".format(extraction, args.model, args.fold), map_location=device))
     test_loss, test_acc, test_precision, test_recall, test_f1, test_auc = test(testloader, milnet, criterion, device, args.model)
     
     print('extraction = {}, model = {}'.format(extraction, args.model))
